@@ -1,12 +1,4 @@
-// 主题适配
-const updateTheme = () => {
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.style.setProperty('--icon-filter', isDark ? '1' : '0');
-};
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
-updateTheme();
-
-// 原有功能脚本
+// 双击缩放限制
 let lastTouch = 0;
 document.addEventListener('touchstart', function(e) {
     const now = Date.now();
@@ -64,7 +56,7 @@ function updateHighlight(target) {
         const container = target.parentElement;
         const scrollLeft = container.scrollLeft;
         const relativeLeft = target.offsetLeft - (container.offsetWidth/2 - target.offsetWidth/2);
-
+        
         highlight.style.width = `${target.offsetWidth}px`;
         highlight.style.left = `${target.offsetLeft}px`;
         highlight.style.top = '50%';
@@ -83,12 +75,12 @@ document.querySelectorAll('.nav-category').forEach(category => {
         document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
         this.classList.add('active');
         updateHighlight(this);
-
+        
         document.querySelectorAll('.nav-items').forEach(item => {
             item.classList.remove('active');
             if(item.dataset.category === this.dataset.category) item.classList.add('active');
         });
-    
+
         if (window.matchMedia("(max-width: 768px)").matches) {
             this.parentElement.scrollTo({
                 left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
@@ -108,3 +100,5 @@ window.addEventListener('resize', () => {
         }, 10);
     }
 });
+
+updateHighlight(document.querySelector('.nav-category.active'));
