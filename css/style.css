@@ -1,3 +1,25 @@
+:root {
+    --bg-color: rgba(255, 255, 255, 1);
+    --text-color: rgba(255, 255, 255, 1);
+    --search-bg: rgba(255, 255, 255, 0.9);
+    --search-shadow: rgba(0, 0, 0, 0.4);
+    --nav-bg: rgba(255, 255, 255, 0.4);
+    --nav-highlight: rgba(66, 133, 244, 1);
+    --nav-icon-bg: rgba(255, 255, 255, 1);
+    --icon-filter: invert(0);
+    --text-shadow: rgba(35, 35, 35, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: rgba(26, 26, 26, 1);
+        --text-color: rgba(245, 245, 245, 1);
+        --search-bg: rgba(102, 102, 102, 0.9);
+        --nav-icon-bg: rgb(80, 80, 80, 1);
+        --icon-filter: invert(1);
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,36 +31,20 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 12px;
-    color: var(--text-color); /* 后加 */
     font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     -webkit-tap-highlight-color: transparent;
-    /* background-color: rgba(0, 0, 0, 1); */
-    background-color: var(--bg-color); /* 后加 */
+    background-color: var(--bg-color);
+    color: var(--text-color);
     background-size: cover;
     background-position: center;
-    transition: background-image 0.5s ease;
-}
-
-/* 后加 */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url(https://www.yumus.cn/api/?target=img&brand=bing&ua=pc) rgba(200, 200, 200, 0.5) no-repeat fixed;
-    background-size: cover;
-    z-index: -1;
-    transition: filter 0.5s;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* 时钟 */
 .clock-container {
-    color: var(--text-color); /* 后加 */
     margin-top: 32px;
     text-align: center;
-    text-shadow: 0px 0px 3px rgba(35, 35, 35, 1);
+    text-shadow: 0px 0px 3px var(--text-shadow);
 }
 
 #time {
@@ -58,11 +64,12 @@ body::before {
     max-width: 600px;
     width: 94%;
     margin: 0 auto 35px; 
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--search-bg);
     border-radius: 20px;
-    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 12px 2px var(--search-shadow);
     height: 46px;
     align-items: center;
+    transition: background 0.3s ease;
 }
 
 .engine-select {
@@ -94,8 +101,9 @@ body::before {
     padding: 8px;
     border-radius: 12px;
     z-index: 300;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: var(--search-bg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
 }
 
 .engine-list.show {
@@ -105,6 +113,7 @@ body::before {
 .engine-icon {
     width: 24px;
     height: 24px;
+    filter: var(--icon-filter);
 }
 
 .engine-option {
@@ -116,7 +125,7 @@ body::before {
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    color: rgba(51, 51, 51, 1);
+    color: var(--text-color);
 }
 
 .engine-option:hover {
@@ -138,7 +147,7 @@ body::before {
     height: 100%;
     padding: 0;
     border: none;
-    background: rgba(255, 255, 255, 0);
+    background: transparent;
     border-radius: 0 20px 20px 0;
     cursor: pointer;
     flex-shrink: 0;
@@ -151,6 +160,7 @@ body::before {
 .search-icon {
     width: 24px;
     height: 24px;
+    filter: var(--icon-filter);
 }
 
 /* 网址收藏 */
@@ -168,17 +178,16 @@ body::before {
     padding: 15px;
     width: 120px;
     box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
+    background: var(--nav-bg);
+    box-shadow: 0 0 12px 2px var(--search-shadow);
+    transition: background 0.3s ease;
 }
 
 .nav-highlight {
     position: absolute;
-    background: rgba(66, 133, 244, 1);
+    background: var(--nav-highlight);
     border-radius: 6px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    width: calc(100% - 24px);
-    left: 12px;
 }
 
 .nav-category {
@@ -186,7 +195,7 @@ body::before {
     position: relative;
     padding: 10px;
     cursor: pointer;
-    color: rgba(255, 255, 255, 1);
+    color: var(--text-color);
     margin-bottom: 6px;
     z-index: 2;
     transition: color 0.3s;
@@ -194,17 +203,16 @@ body::before {
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    text-shadow: 0px 0px 3px rgba(35, 35, 35, 1);
+    text-shadow: 0px 0px 3px var(--text-shadow);
 }
 
 .nav-content {
     flex: 1;
     padding: 15px;
     border-radius: 16px;
-    /* background: rgba(255, 255, 255, 0.4); */
-    background: var(--card-bg); /* 后加 */
-    /* box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4); */
-    box-shadow: 0 0 12px 2px var(--shadow-color); /* 后加 */
+    background: var(--nav-bg);
+    box-shadow: 0 0 12px 2px var(--search-shadow);
+    transition: background 0.3s ease;
 }
 
 .nav-items {
@@ -220,21 +228,22 @@ body::before {
 
 .nav-item {
     text-align: center;
-    color: rgba(255, 255, 255, 1);
+    color: var(--text-color);
     text-decoration: none;
     font-size: 13px;
-    text-shadow: 0px 0px 3px rgba(35, 35, 35, 1);
+    text-shadow: 0px 0px 3px var(--text-shadow);
 }
 
 .nav-icon {
     width:32px;
     height: 32px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 1);
+    background: var(--nav-icon-bg);
     margin: 0 auto 6px;
     transition: all 0.2s;
     padding: 8px;
     object-fit: contain;
+    filter: var(--icon-filter);
 }
 
 .nav-item:hover .nav-icon {
@@ -303,37 +312,10 @@ body::before {
     }
 }
 
-.boottom{
+.boottom {
     height: 35px;
     margin-top: 30px;
     /* background: hsla(0, 0%, 100%, 0.6) border-box; */
     /* -webkit-backdrop-filter: blur(20px); */
     /* backdrop-filter: blur(20px); */
-}
-
-:root {
-    --bg-color: #ffffff;
-    --text-color: #333333;
-    --card-bg: rgba(255, 255, 255, 0.7);
-    --search-bg: rgba(255, 255, 255, 0.7);
-    --shadow-color: rgba(0, 0, 0, 0.4);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-color: #1a1a1a;
-        --text-color: #e0e0e0;
-        --card-bg: rgba(0, 0, 0, 0.6);
-        --search-bg: rgba(0, 0, 0, 0.6);
-        --shadow-color: rgba(255, 255, 255, 0.2);
-    }
-
-    /* 深色模式专用调整 */
-    body::before {
-        filter: brightness(0.4) contrast(0.9);
-    }
-
-    .nav-icon {
-        background: rgba(255, 255, 255, 0.8);
-    }
 }
