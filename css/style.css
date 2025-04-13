@@ -9,16 +9,33 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 12px;
+    color: var(--text-color); /* 后加 */
     font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     -webkit-tap-highlight-color: transparent;
-    background-color: rgba(0, 0, 0, 1);
+    /* background-color: rgba(0, 0, 0, 1); */
+    background-color: var(--bg-color); /* 后加 */
     background-size: cover;
     background-position: center;
     transition: background-image 0.5s ease;
 }
 
+/* 后加 */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(https://www.yumus.cn/api/?target=img&brand=bing&ua=pc) rgba(200, 200, 200, 0.5) no-repeat fixed;
+    background-size: cover;
+    z-index: -1;
+    transition: filter 0.5s;
+}
+
 /* 时钟 */
 .clock-container {
+    color: var(--text-color); /* 后加 */
     margin-top: 32px;
     text-align: center;
     text-shadow: 0px 0px 3px rgba(35, 35, 35, 1);
@@ -184,8 +201,10 @@ body {
     flex: 1;
     padding: 15px;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
+    /* background: rgba(255, 255, 255, 0.4); */
+    background: var(--card-bg); /* 后加 */
+    /* box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4); */
+    box-shadow: 0 0 12px 2px var(--shadow-color); /* 后加 */
 }
 
 .nav-items {
@@ -290,4 +309,31 @@ body {
     /* background: hsla(0, 0%, 100%, 0.6) border-box; */
     /* -webkit-backdrop-filter: blur(20px); */
     /* backdrop-filter: blur(20px); */
+}
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --search-bg: rgba(255, 255, 255, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --card-bg: rgba(0, 0, 0, 0.6);
+        --search-bg: rgba(0, 0, 0, 0.6);
+        --shadow-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 深色模式专用调整 */
+    body::before {
+        filter: brightness(0.4) contrast(0.9);
+    }
+
+    .nav-icon {
+        background: rgba(255, 255, 255, 0.8);
+    }
 }

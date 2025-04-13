@@ -102,3 +102,15 @@ window.addEventListener('resize', () => {
 });
 
 updateHighlight(document.querySelector('.nav-category.active'));
+
+// 自动响应系统主题变化
+const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        
+function updateTheme(e) {
+    document.documentElement.style.colorScheme = e.matches ? 'dark' : 'light';
+}
+
+// 初始化设置
+updateTheme(colorSchemeQuery);
+// 监听变化
+colorSchemeQuery.addEventListener('change', updateTheme);
