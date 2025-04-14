@@ -142,6 +142,7 @@ body {
     width: 94%;
     margin: 0 auto;
     display: flex;
+    -webkit-gap: 15px;
     gap: 15px;
 }
 
