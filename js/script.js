@@ -1,10 +1,10 @@
 // 双击缩放限制
-let lastTouch = 0;
-document.addEventListener('touchstart', function(e) {
-    const now = Date.now();
-    if (now - lastTouch <= 300) e.preventDefault();
-    lastTouch = now;
-}, { passive: false });
+//let lastTouch = 0;
+//document.addEventListener('touchstart', function(e) {
+    //const now = Date.now();
+    //if (now - lastTouch <= 300) e.preventDefault();
+    //lastTouch = now;
+//}, { passive: false });
 
 const engines = {
     bing: { icon: 'images/bing.svg', url: 'https://www.bing.com/search?q=' },
