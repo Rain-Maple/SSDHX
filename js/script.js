@@ -1,11 +1,4 @@
-// 双击缩放限制
-//let lastTouch = 0;
-//document.addEventListener('touchstart', function(e) {
-    //const now = Date.now();
-    //if (now - lastTouch <= 300) e.preventDefault();
-    //lastTouch = now;
-//}, { passive: false });
-
+// 搜索引擎配置
 const engines = {
     bing: { icon: 'images/bing.svg', url: 'https://www.bing.com/search?q=' },
     baidu: { icon: 'images/baidu.svg', url: 'https://www.baidu.com/s?wd=' },
@@ -18,6 +11,7 @@ const engines = {
 
 let currentEngine = 'bing';
 
+//引擎选择功能
 document.querySelectorAll('.engine-option').forEach(option => {
     option.addEventListener('click', () => {
         currentEngine = option.dataset.engine;
@@ -27,17 +21,20 @@ document.querySelectorAll('.engine-option').forEach(option => {
     });
 });
 
+//显示/隐藏引擎列表
 document.querySelector('.engine-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     document.querySelector('.engine-list').classList.toggle('show');
 });
 
+//点击空白处隐藏引擎列表
 document.addEventListener('click', (e) => {
     if (!e.target.closest('.engine-select')) {
         document.querySelector('.engine-list').classList.remove('show');
     }
 });
 
+//搜索功能
 document.querySelector('.search-btn').addEventListener('click', search);
 document.querySelector('.search-input').addEventListener('keypress', e => {
     if (e.key === 'Enter') search();
@@ -48,6 +45,7 @@ function search() {
     window.open(engines[currentEngine].url + encodeURIComponent(query));
 }
 
+// 导航栏高亮功能
 function updateHighlight(target) {
     const highlight = document.querySelector('.nav-highlight');
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -70,6 +68,7 @@ function updateHighlight(target) {
     }
 }
 
+//导航分类点击事件
 document.querySelectorAll('.nav-category').forEach(category => {
     category.addEventListener('click', function() {
         document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
@@ -80,7 +79,7 @@ document.querySelectorAll('.nav-category').forEach(category => {
             item.classList.remove('active');
             if(item.dataset.category === this.dataset.category) item.classList.add('active');
         });
-
+        //移动端自动滚动
         if (window.matchMedia("(max-width: 768px)").matches) {
             this.parentElement.scrollTo({
                 left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
@@ -90,6 +89,7 @@ document.querySelectorAll('.nav-category').forEach(category => {
     });
 });
 
+// 监听窗口大小变化，更新高亮位置
 window.addEventListener('resize', () => {
     const active = document.querySelector('.nav-category.active');
     if (active) {
@@ -101,4 +101,5 @@ window.addEventListener('resize', () => {
     }
 });
 
+// 初始化高亮位置
 updateHighlight(document.querySelector('.nav-category.active'));
