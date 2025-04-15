@@ -9,7 +9,6 @@ body {
     user-select: none;
     -webkit-user-select: none;
     -webkit-user-drag: none;
-    box-sizing: border-box;
     background: no-repeat fixed;
     background-size: cover;
     background-position: center;
@@ -286,12 +285,4 @@ body {
         height: 32px;
         padding: 6px;
     }
-}
-
-.boottom{
-    height: 35px;
-    margin-top: 30px;
-    /* background: hsla(0, 0%, 100%, 0.6) border-box; */
-    /* -webkit-backdrop-filter: blur(20px); */
-    /* backdrop-filter: blur(20px); */
 }
