@@ -13,7 +13,7 @@ body {
     background-size: cover;
     background-position: center;
     background-blend-mode: multiply;
-    background-color: rgba(0, 0, 0, 0.7); /* 默认黑色背景 */
+    background-color: rgba(0, 0, 0, 0.2); /* 默认黑色背景 */
     -webkit-tap-highlight-color: transparent;
     transition: background-image 0.5s ease;
     font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
