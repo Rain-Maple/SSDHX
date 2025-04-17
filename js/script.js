@@ -44,7 +44,6 @@ function search() {
     const query = document.querySelector('.search-input').value;
     window.open(engines[currentEngine].url + encodeURIComponent(query));
 }
-document.querySelector('.search-input').foucs();
 
 // 导航栏高亮功能
 function updateHighlight(target) {
