@@ -136,7 +136,7 @@ body {
     height: 24px;
 }
 
-/* .search-suggestions {
+.search-suggestions {
     position: absolute;
     top: calc(100% + 8px);
     left: 60px;
@@ -148,7 +148,7 @@ body {
     overflow-y: auto;
     display: none;
     z-index: 200;
-} */
+}
 
 .suggestion-item {
     padding: 12px 20px;
