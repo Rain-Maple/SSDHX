@@ -37,129 +37,129 @@ document.addEventListener('click', (e) => {
 });
 
 // 整合后的搜索建议功能
-        function getSuggestions(keyword, callback) {
-            const script = document.createElement('script');
-            script.src = `https://www.baidu.com/su?wd=${encodeURIComponent(keyword)}&cb=baiduSuggestion`;
-            document.body.appendChild(script);
+function getSuggestions(keyword, callback) {
+    const script = document.createElement('script');
+    script.src = `https://www.baidu.com/su?wd=${encodeURIComponent(keyword)}&cb=baiduSuggestion`;
+    document.body.appendChild(script);
             
-            window.baiduSuggestion = (data) => {
-                callback(data.s);
-                document.body.removeChild(script);
-                delete window.baiduSuggestion;
+    window.baiduSuggestion = (data) => {
+        callback(data.s);
+        document.body.removeChild(script);
+        delete window.baiduSuggestion;
+    }
+}
+
+const debounce = (func, delay) => {
+    let timeout;
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+};
+
+function showSuggestions(keywords) {
+    const container = document.querySelector('.search-suggestions');
+    container.innerHTML = '';
+    activeSuggestionIndex = -1;
+    suggestionsData = keywords.slice(0, 8);
+            
+    suggestionsData.forEach((keyword, index) => {
+        const item = document.createElement('div');
+        item.className = 'suggestion-item';
+        item.innerHTML = `
+            <img src="images/search.svg" class="suggestion-icon">
+            ${keyword}
+        `;
+
+        item.addEventListener('mouseenter', () => {
+            activeSuggestionIndex = index;
+            updateActiveSuggestion();
+        });
+                
+        item.addEventListener('click', () => {
+            selectSuggestion(index);
+            container.style.display = 'none';
+        });
+                
+        container.appendChild(item);
+    });
+            
+    container.style.display = suggestionsData.length ? 'block' : 'none';
+}
+
+function handleKeyNavigation(e) {
+    const container = document.querySelector('.search-suggestions');
+    if (!container || container.style.display === 'none') return;
+
+    switch(e.key) {
+        case 'ArrowDown':
+            e.preventDefault();
+            activeSuggestionIndex = 
+                activeSuggestionIndex >= suggestionsData.length - 1 ? 0 : activeSuggestionIndex + 1;
+            updateActiveSuggestion();
+            break;
+                    
+        case 'ArrowUp':
+            e.preventDefault();
+            activeSuggestionIndex = 
+                activeSuggestionIndex <= 0 ? suggestionsData.length - 1 : activeSuggestionIndex - 1;
+            updateActiveSuggestion();
+            break;
+                    
+        case 'Enter':
+            e.preventDefault();
+            if (activeSuggestionIndex > -1) {
+                selectSuggestion(activeSuggestionIndex);
+                container.style.display = 'none';
+            } else {
+                search();
             }
-        }
-
-        const debounce = (func, delay) => {
-            let timeout;
-            return (...args) => {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), delay);
-            };
-        };
-
-        function showSuggestions(keywords) {
-            const container = document.querySelector('.search-suggestions');
-            container.innerHTML = '';
+            break;
+                    
+        case 'Escape':
+            container.style.display = 'none';
             activeSuggestionIndex = -1;
-            suggestionsData = keywords.slice(0, 8);
-            
-            suggestionsData.forEach((keyword, index) => {
-                const item = document.createElement('div');
-                item.className = 'suggestion-item';
-                item.innerHTML = `
-                    <img src="images/search.svg" class="suggestion-icon">
-                    ${keyword}
-                `;
+            break;
+    }
+}
 
-                item.addEventListener('mouseenter', () => {
-                    activeSuggestionIndex = index;
-                    updateActiveSuggestion();
-                });
-                
-                item.addEventListener('click', () => {
-                    selectSuggestion(index);
-                    container.style.display = 'none';
-                });
-                
-                container.appendChild(item);
-            });
-            
-            container.style.display = suggestionsData.length ? 'block' : 'none';
+function updateActiveSuggestion() {
+    const items = document.querySelectorAll('.suggestion-item');
+    items.forEach((item, index) => {
+        const isActive = index === activeSuggestionIndex;
+        item.classList.toggle('active', isActive);
+        if (isActive) {
+            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         }
+    });
+}
 
-        function handleKeyNavigation(e) {
-            const container = document.querySelector('.search-suggestions');
-            if (!container || container.style.display === 'none') return;
+function selectSuggestion(index) {
+    const input = document.querySelector('.search-input');
+    input.value = suggestionsData[index];
+    search();
+}
 
-            switch(e.key) {
-                case 'ArrowDown':
-                    e.preventDefault();
-                    activeSuggestionIndex = 
-                        activeSuggestionIndex >= suggestionsData.length - 1 ? 0 : activeSuggestionIndex + 1;
-                    updateActiveSuggestion();
-                    break;
-                    
-                case 'ArrowUp':
-                    e.preventDefault();
-                    activeSuggestionIndex = 
-                        activeSuggestionIndex <= 0 ? suggestionsData.length - 1 : activeSuggestionIndex - 1;
-                    updateActiveSuggestion();
-                    break;
-                    
-                case 'Enter':
-                    e.preventDefault();
-                    if (activeSuggestionIndex > -1) {
-                        selectSuggestion(activeSuggestionIndex);
-                        container.style.display = 'none';
-                    } else {
-                        search();
-                    }
-                    break;
-                    
-                case 'Escape':
-                    container.style.display = 'none';
-                    activeSuggestionIndex = -1;
-                    break;
-            }
-        }
+// 更新后的搜索功能
+function search() {
+    const input = document.querySelector('.search-input');
+    const keyword = encodeURIComponent(input.value.trim());
+    if (keyword) {
+        window.open(engines[currentEngine].url + keyword, '_self');
+    }
+}
 
-        function updateActiveSuggestion() {
-            const items = document.querySelectorAll('.suggestion-item');
-            items.forEach((item, index) => {
-                const isActive = index === activeSuggestionIndex;
-                item.classList.toggle('active', isActive);
-                if (isActive) {
-                    item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-                }
-            });
-        }
+// 事件监听整合
+document.querySelector('.search-input').addEventListener('input', debounce(e => {
+    const keyword = e.target.value.trim();
+    if (!keyword) {
+        document.querySelector('.search-suggestions').style.display = 'none';
+        return;
+    }
+    getSuggestions(keyword, suggestions => showSuggestions(suggestions || []));
+}, 300));
 
-        function selectSuggestion(index) {
-            const input = document.querySelector('.search-input');
-            input.value = suggestionsData[index];
-            search();
-        }
-
-        // 更新后的搜索功能
-        function search() {
-            const input = document.querySelector('.search-input');
-            const keyword = encodeURIComponent(input.value.trim());
-            if (keyword) {
-                window.open(engines[currentEngine].url + keyword, '_self');
-            }
-        }
-
-        // 事件监听整合
-        document.querySelector('.search-input').addEventListener('input', debounce(e => {
-            const keyword = e.target.value.trim();
-            if (!keyword) {
-                document.querySelector('.search-suggestions').style.display = 'none';
-                return;
-            }
-            getSuggestions(keyword, suggestions => showSuggestions(suggestions || []));
-        }, 300));
-
-        document.querySelector('.search-input').addEventListener('keydown', handleKeyNavigation);
+document.querySelector('.search-input').addEventListener('keydown', handleKeyNavigation);
 
 // 导航栏高亮功能
 function updateHighlight(target) {
