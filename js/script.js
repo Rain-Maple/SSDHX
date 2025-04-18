@@ -13,6 +13,22 @@ let currentEngine = 'bing';
 let activeSuggestionIndex = -1;
 let suggestionsData = [];
 
+// 增强版外部点击处理
+function handleOutsideInteraction(e) {
+    const searchContainer = document.querySelector('.search-container');
+    const suggestions = document.querySelector('.search-suggestions');
+    
+    // 同时检查容器关系和可见状态
+    if (!searchContainer.contains(e.target) && suggestions.style.display === 'block') {
+        suggestions.style.display = 'none';
+        activeSuggestionIndex = -1;
+    }
+}
+
+// 双事件监听（兼容触摸设备）
+document.addEventListener('click', handleOutsideInteraction);
+document.addEventListener('touchstart', handleOutsideInteraction);
+
 //引擎选择功能
 document.querySelectorAll('.engine-option').forEach(option => {
     option.addEventListener('click', () => {
@@ -149,13 +165,22 @@ function search() {
     }
 }
 
-// 事件监听整合
+// 搜索建议核心功能
 document.querySelector('.search-input').addEventListener('input', debounce(e => {
     const keyword = e.target.value.trim();
+    const container = document.querySelector('.search-suggestions');
+    
     if (!keyword) {
-        document.querySelector('.search-suggestions').style.display = 'none';
+        container.style.display = 'none';
         return;
     }
+    
+    // 移动端键盘弹出时调整位置
+    if ('visualViewport' in window) {
+        const viewport = window.visualViewport;
+        container.style.top = `calc(${viewport.height}px - ${viewport.height - e.target.getBoundingClientRect().bottom}px + 8px)`;
+    }
+    
     getSuggestions(keyword, suggestions => showSuggestions(suggestions || []));
 }, 300));
 
