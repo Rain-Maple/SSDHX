@@ -136,38 +136,6 @@ body {
     height: 24px;
 }
 
-.search_result{
-    width: 630px;
-    margin-left: 15px;
-    margin: 0 auto;
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    border-radius: 25px;
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    background: rgba(255, 255, 255, 0.6) border-box;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, .3) inset,
-                0 1px 16px rgba(0, 0, 0, 0.6);
-    text-shadow: 0 1px 1px rgba(255, 255, 255, .3);
-}
-
-.result_item {
-    padding: 8px 12px;
-}
-
-.suggestion-icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 10px;
-    flex-shrink: 0;
-}
-
-.result_item:hover{
-	background-color: rgba(255, 255, 255,);
-}
-
 /* 网址收藏 */
 .nav-wrapper {
     max-width: 800px;
