@@ -182,32 +182,39 @@
     }
 
     // 导航模块
-    function initNavigation() {
-        const navCategories = document.querySelector('.nav-categories');
-        const navHighlight = document.querySelector('.nav-highlight');
+function initNavigation() {
+    const navCategories = document.querySelector('.nav-categories');
+    const navHighlight = document.querySelector('.nav-highlight');
+    const initialActive = document.querySelector('.nav-category.active'); // 初始化选择器
 
-        document.querySelectorAll('.nav-category').forEach(category => {
-            category.addEventListener('click', function() {
-                document.querySelectorAll('.nav-category').forEach(c => 
-                    c.classList.remove('active')
-                );
-                this.classList.add('active');
-                updateHighlight(this);
-                
-                document.querySelectorAll('.nav-items').forEach(item => {
-                    item.classList.remove('active');
-                    item.dataset.category === this.dataset.category && 
-                        item.classList.add('active');
-                });
+    // 初始化高亮
+    if (initialActive) {
+        updateHighlight(initialActive);
+        navHighlight.style.opacity = '1'; // 确保高亮可见
+    }
 
-                if (window.matchMedia("(max-width: 768px)").matches) {
-                    this.parentElement.scrollTo({
-                        left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
-                        behavior: 'smooth'
-                    });
-                }
+    document.querySelectorAll('.nav-category').forEach(category => {
+        category.addEventListener('click', function() {
+            document.querySelectorAll('.nav-category').forEach(c => 
+                c.classList.remove('active')
+            );
+            this.classList.add('active');
+            updateHighlight(this);
+            
+            document.querySelectorAll('.nav-items').forEach(item => {
+                item.classList.remove('active');
+                item.dataset.category === this.dataset.category && 
+                    item.classList.add('active');
             });
+
+            if (window.matchMedia("(max-width: 768px)").matches) {
+                this.parentElement.scrollTo({
+                    left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
+                    behavior: 'smooth'
+                });
+            }
         });
+    });
 
         function updateHighlight(target) {
             const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -247,10 +254,6 @@
         initEngineSelect();
         initSearch();
         initNavigation();
-        
-        // 初始高亮定位
-        const initialActive = document.querySelector('.nav-category.active');
-        initialActive && updateHighlight(initialActive);
     }
 
     window.addEventListener('DOMContentLoaded', init);
