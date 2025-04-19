@@ -1,3 +1,11 @@
+:root {
+    --search-container-width: 94%;
+    --search-container-height: 46px;
+    --primary-shadow: 0 0 0 1px rgba(255, 255, 255, .3) inset,
+                    0 1px 16px rgba(0, 0, 0, 0.6);
+    --primary-text-shadow: 0 1px 1px rgba(255, 255, 255, .3);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,17 +15,17 @@
 
 body {
     user-select: none;
-    background: no-repeat fixed;
+    background: url(./images/img.jpg) rgba(200, 200, 200, 0.5) no-repeat fixed;
+    /* background: no-repeat fixed; */
     background-size: cover;
     background-position: center;
     background-blend-mode: multiply;
-    background-color: rgba(0, 0, 0, 0.1); /* 默认浅灰色背景 */
     -webkit-tap-highlight-color: transparent;
     transition: background-image 0.5s ease;
-    font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", 
+                "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 
-/* 时钟 */
 .clock-container {
     margin-top: 32px;
     text-align: center;
@@ -35,17 +43,18 @@ body {
     color: rgba(255, 255, 255, 1);
 }
 
-/* 搜索 */
 .search-container {
+    position: relative;
     display: flex;
     max-width: 600px;
     width: 94%;
-    margin: 0 auto 35px; 
-    background: rgba(255, 255, 255, 0.9);
+    margin: 0 auto;
     border-radius: 20px;
-    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
     height: 46px;
     align-items: center;
+    background: rgba(255, 255, 255, 0.9) border-box;
+    box-shadow: var(--primary-shadow);
+    text-shadow: var(--primary-text-shadow);
 }
 
 .engine-select {
@@ -77,8 +86,9 @@ body {
     padding: 8px;
     border-radius: 12px;
     z-index: 300;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9) border-box;
+    box-shadow: var(--primary-shadow);
+    text-shadow: var(--primary-text-shadow);
 }
 
 .engine-list.show {
@@ -103,7 +113,7 @@ body {
 }
 
 .engine-option:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 1);
 }
 
 .search-input {
@@ -129,11 +139,55 @@ body {
     align-items: center;
     justify-content: center;
     -webkit-tap-highlight-color: transparent;
-}      
+}
 
 .search-icon {
     width: 24px;
     height: 24px;
+}
+
+.search-suggestions {
+    max-width: 600px;
+    margin: 0 auto;
+	margin-top: 8px;
+	overflow: hidden;
+    border-radius: 25px;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.9) border-box;
+    box-shadow: var(--primary-shadow);
+    text-shadow: var(--primary-text-shadow);
+}
+
+.suggestion-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 15px;
+    cursor: pointer;
+    gap: 10px;
+    color: rgba(53, 53, 53, 1);
+    transition: background-color 0.2s;
+}
+
+.suggestion-item.active {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.suggestion-item.active::after {
+    content: "↩ 确认";
+    position: absolute;
+    right: 20px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.suggestion-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+    opacity: 0.6;
 }
 
 /* 网址收藏 */
@@ -141,6 +195,7 @@ body {
     max-width: 800px;
     width: 94%;
     margin: 0 auto;
+    margin-top: 35px;
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: 120px;
@@ -154,7 +209,8 @@ body {
     width: 120px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--primary-shadow);
+    text-shadow: var(--primary-text-shadow);
 }
 
 .nav-highlight {
@@ -187,7 +243,7 @@ body {
     padding: 15px;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--primary-shadow);
 }
 
 .nav-items {
@@ -252,6 +308,11 @@ body {
         line-height: 44px;
     }
 
+    .search-suggestions {
+        max-width: 90%;
+        width: 100%;
+    }
+
     .nav-wrapper {
         display: flex;
         flex-direction: column;
@@ -286,7 +347,7 @@ body {
     }
 }
 
-.boottom{
+.bottom{
     height: 35px;
     margin-top: 30px;
 }
