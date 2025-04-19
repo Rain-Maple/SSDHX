@@ -10,181 +10,129 @@ const engines = {
 };
 
 let currentEngine = 'bing';
-let activeSuggestionIndex = -1;
-let suggestionsData = [];
 
-// 增强版外部点击处理
-function handleOutsideInteraction(e) {
-    const searchContainer = document.querySelector('.search-container');
-    const suggestions = document.querySelector('.search-suggestions');
+// 模块私有变量
+let itemIndex = -1;
+let itemArray = [];
+
+const inputAction = () => {
+    const BAIDU_API = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=#CONTENT#&cb=window_baidu_sug";
+    const searchInput = document.querySelector(".search_input");
     
-    // 同时检查容器关系和可见状态
-    if (!searchContainer.contains(e.target) && suggestions.style.display === 'block') {
-        suggestions.style.display = 'none';
-        activeSuggestionIndex = -1;
-    }
-}
+    const handleInput = () => {
+        const inputValue = searchInput.value;
+        if (inputValue.length >= 24) return;
 
-// 双事件监听（兼容触摸设备）
-document.addEventListener('click', handleOutsideInteraction);
-document.addEventListener('touchstart', handleOutsideInteraction);
+        const existingScript = document.getElementById("baidu_script");
+        existingScript?.parentNode.removeChild(existingScript);
 
-//引擎选择功能
-document.querySelectorAll('.engine-option').forEach(option => {
-    option.addEventListener('click', () => {
-        currentEngine = option.dataset.engine;
-        document.querySelector('.engine-btn').innerHTML = 
-            `<img src="${engines[currentEngine].icon}" class="engine-icon" alt="${currentEngine}">`;
-        document.querySelector('.engine-list').classList.remove('show');
-    });
-});
-
-//显示/隐藏引擎列表
-document.querySelector('.engine-btn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    document.querySelector('.engine-list').classList.toggle('show');
-});
-
-//点击空白处隐藏引擎列表
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.engine-select')) {
-        document.querySelector('.engine-list').classList.remove('show');
-    }
-});
-
-// 整合后的搜索建议功能
-function getSuggestions(keyword, callback) {
-    const script = document.createElement('script');
-    script.src = `https://www.baidu.com/su?wd=${encodeURIComponent(keyword)}&cb=baiduSuggestion`;
-    document.body.appendChild(script);
-            
-    window.baiduSuggestion = (data) => {
-        callback(data.s);
-        document.body.removeChild(script);
-        delete window.baiduSuggestion;
-    }
-}
-
-const debounce = (func, delay) => {
-    let timeout;
-    return (...args) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), delay);
+        const script = document.createElement("script");
+        script.id = "baidu_script";
+        script.src = BAIDU_API.replace("#CONTENT#", encodeURIComponent(inputValue));
+        document.head.appendChild(script);
     };
+
+    searchInput.addEventListener("input", handleInput);
 };
 
-function showSuggestions(keywords) {
-    const container = document.querySelector('.search-suggestions');
-    container.innerHTML = '';
-    activeSuggestionIndex = -1;
-    suggestionsData = keywords.slice(0, 8);
-            
-    suggestionsData.forEach((keyword, index) => {
-        const item = document.createElement('div');
-        item.className = 'suggestion-item';
-        item.innerHTML = `
-            <img src="images/search.svg" class="suggestion-icon">
-            ${keyword}
-        `;
+// 必须保持全局函数
+window.window_baidu_sug = (result) => {
+    const suggestions = result.s || [];
+    const searchInput = document.querySelector(".search-input");
+    const resultContainer = document.querySelector(".search_result");
+    const resultItems = Array.from(document.querySelectorAll(".result_item"));
+    const inputValue = searchInput.value.trim();
 
-        item.addEventListener('mouseenter', () => {
-            activeSuggestionIndex = index;
-            updateActiveSuggestion();
-        });
-                
-        item.addEventListener('click', () => {
-            selectSuggestion(index);
-            container.style.display = 'none';
-        });
-                
-        container.appendChild(item);
-    });
-            
-    container.style.display = suggestionsData.length ? 'block' : 'none';
-}
+    // 重置样式
+    resultItems.forEach(item => item.style.background = "none");
 
-function handleKeyNavigation(e) {
-    const container = document.querySelector('.search-suggestions');
-    if (!container || container.style.display === 'none') return;
-
-    switch(e.key) {
-        case 'ArrowDown':
-            e.preventDefault();
-            activeSuggestionIndex = 
-                activeSuggestionIndex >= suggestionsData.length - 1 ? 0 : activeSuggestionIndex + 1;
-            updateActiveSuggestion();
-            break;
-                    
-        case 'ArrowUp':
-            e.preventDefault();
-            activeSuggestionIndex = 
-                activeSuggestionIndex <= 0 ? suggestionsData.length - 1 : activeSuggestionIndex - 1;
-            updateActiveSuggestion();
-            break;
-                    
-        case 'Enter':
-            e.preventDefault();
-            if (activeSuggestionIndex > -1) {
-                selectSuggestion(activeSuggestionIndex);
-                container.style.display = 'none';
-            } else {
-                search();
-            }
-            break;
-                    
-        case 'Escape':
-            container.style.display = 'none';
-            activeSuggestionIndex = -1;
-            break;
-    }
-}
-
-function updateActiveSuggestion() {
-    const items = document.querySelectorAll('.suggestion-item');
-    items.forEach((item, index) => {
-        const isActive = index === activeSuggestionIndex;
-        item.classList.toggle('active', isActive);
-        if (isActive) {
-            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-        }
-    });
-}
-
-function selectSuggestion(index) {
-    const input = document.querySelector('.search-input');
-    input.value = suggestionsData[index];
-    search();
-}
-
-// 更新后的搜索功能
-function search() {
-    const input = document.querySelector('.search-input');
-    const keyword = encodeURIComponent(input.value.trim());
-    if (keyword) {
-        window.open(engines[currentEngine].url + keyword, '_self');
-    }
-}
-
-// 搜索建议核心功能
-document.querySelector('.search-input').addEventListener('input', debounce(e => {
-    const keyword = e.target.value.trim();
-    const container = document.querySelector('.search-suggestions');
-    
-    if (!keyword) {
-        container.style.display = 'none';
+    if (suggestions.length === 0) {
+        resultContainer.style.display = "none";
         return;
     }
-    
-    // 移动端键盘弹出时调整位置
-    if ('visualViewport' in window) {
-        const viewport = window.visualViewport;
-        container.style.top = `calc(${viewport.height}px - ${viewport.height - e.target.getBoundingClientRect().bottom}px + 8px)`;
-    }
-    
-    getSuggestions(keyword, suggestions => showSuggestions(suggestions || []));
-}, 300));
 
-document.querySelector('.search-input').addEventListener('keydown', handleKeyNavigation);
+    resultContainer.style.display = "block";
+    itemArray = [];
+
+    resultItems.forEach((item, index) => {
+        if (index >= suggestions.length) {
+            item.style.display = "none";
+            return;
+        }
+
+        const suggestion = suggestions[index];
+        const matchIndex = suggestion.indexOf(inputValue);
+       const formattedText = `
+            <img src="image/fangdajing.svg" class="suggestion-icon">
+            ${matchIndex >= 0 
+                ? `${inputValue}${suggestion.slice(matchIndex + inputValue.length)}`
+                : suggestion}
+        `;
+
+        item.innerHTML = formattedText;
+        item.style.display = "block";
+        itemArray.push(suggestion);
+    });
+
+    itemArray.push(inputValue);
+    itemIndex = -1;
+};
+
+const takeAdvice = () => {
+    const searchInput = document.querySelector(".search-input");
+    //const submitButton = document.querySelector(".search_submit");//
+    const resultContainer = document.querySelector(".search_result");
+    const resultItems = Array.from(document.querySelectorAll(".result_item"));
+
+    const clearStyles = () => {
+        resultItems.forEach(item => item.style.background = "none");
+    };
+
+    const handleItemClick = (event) => {
+        searchInput.value = event.target.textContent;
+        submitButton.click();
+    };
+
+    const handleKeyEvents = (event) => {
+        if (!["ArrowUp", "ArrowDown", "Escape"].includes(event.key)) return;
+        
+        if (event.key === "Escape") {
+            resultContainer.style.display = "none";
+            return;
+        }
+
+        event.preventDefault();
+        clearStyles();
+
+        const direction = event.key === "ArrowUp" ? -1 : 1;
+        itemIndex = (itemArray.length + itemIndex + direction) % itemArray.length;
+        searchInput.value = itemArray[itemIndex];
+
+        const targetItem = resultItems[itemIndex];
+        if (targetItem) targetItem.style.background = "#eee";
+    };
+
+    resultItems.forEach((item, index) => {
+        item.dataset.index = index;
+        item.addEventListener("click", handleItemClick);
+        item.addEventListener("mouseover", () => {
+            clearStyles();
+            itemIndex = index;
+            item.style.background = "#eee";
+        });
+        item.addEventListener("mouseout", clearStyles);
+    });
+
+    document.addEventListener("click", () => {
+        resultContainer.style.display = "none";
+    });
+
+    document.addEventListener("keydown", handleKeyEvents);
+};
+
+// 初始化
+inputAction();
+takeAdvice();
 
 // 导航栏高亮功能
 function updateHighlight(target) {
