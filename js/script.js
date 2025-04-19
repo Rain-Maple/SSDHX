@@ -54,13 +54,12 @@
         const performSearch = () => {
             const query = searchInput.value.trim();
             if (query) {
-                window.open(`${ENGINES[state.currentEngine].url}${encodeURIComponent(query)}`, '_self');
+                window.open(`${ENGINES[state.currentEngine].url}${encodeURIComponent(query)}`, '_blank');
             }
         };
 
         // 事件绑定
         searchBtn.addEventListener('click', performSearch);
-        searchInput.addEventListener('keypress', e => e.key === 'Enter' && performSearch());
 
         // 输入处理
         searchInput.addEventListener('input', handleSearchInput);
@@ -132,7 +131,13 @@
 
         // 键盘导航
         function handleKeyNavigation(e) {
-            if (!suggestionsContainer || suggestionsContainer.style.display === 'none') return;
+            if (!suggestionsContainer || suggestionsContainer.style.display === 'none') {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch();
+                }
+                return;
+            }
 
             switch(e.key) {
                 case 'ArrowDown':
@@ -154,8 +159,8 @@
                     if (state.activeSuggestion > -1) {
                         searchInput.value = state.suggestionsData[state.activeSuggestion];
                         suggestionsContainer.style.display = 'none';
-                        performSearch();
                     }
+                    performSearch();
                     break;
                 case 'Escape':
                     suggestionsContainer.style.display = 'none';
