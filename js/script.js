@@ -74,7 +74,7 @@
 
             const keyword = e.target.value.trim();
             if (!keyword) {
-                suggestionsContainer.style.display = 'none';
+                suggestionsContainer.classList.remove('show');
                 return;
             }
 
@@ -119,14 +119,15 @@
                 
                 item.addEventListener('click', () => {
                     searchInput.value = keyword;
-                    suggestionsContainer.style.display = 'none';
+                    suggestionsContainer.classList.remove('show');
                     performSearch();
                 });
                 
                 suggestionsContainer.appendChild(item);
             });
-            
-            suggestionsContainer.style.display = state.suggestionsData.length ? 'block' : 'none';
+
+            const hasSuggestions = keywords.length > 0;
+            suggestionsContainer.classList.toggle('show', hasSuggestions);
         }
 
         // 键盘导航
@@ -175,7 +176,7 @@
 
         function handleClickOutside(e) {
             if (!e.target.closest('.search-container')) {
-                suggestionsContainer.style.display = 'none';
+                suggestionsContainer.classList.remove('show');
                 state.activeSuggestion = -1;
             }
         }

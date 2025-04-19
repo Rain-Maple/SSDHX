@@ -48,7 +48,7 @@ body {
     max-width: 600px;
     width: 94%;
     margin: 0 auto;
-    border-radius: 20px;
+    border-radius: 16px;
     height: 46px;
     align-items: center;
     background: rgba(255, 255, 255, 0.9) border-box;
@@ -59,7 +59,7 @@ body {
 .engine-select {
     position: relative;
     width: 60px;
-    border-radius: 20px 0 0 20px;
+    border-radius: 16px 0 0 16px;
     flex-shrink: 0;
     height: 100%;
 }
@@ -81,17 +81,24 @@ body {
     top: calc(100% + 5px);
     left: 0;
     width: 85px;
-    display: none;
     padding: 8px;
-    border-radius: 12px;
+    border-radius: 16px;
     z-index: 300;
-    background: rgba(255, 255, 255, 0.9) border-box;
+    background: rgba(255, 255, 255, 0.9);
     box-shadow: var(--primary-shadow);
-    text-shadow: var(--primary-text-shadow);
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, 
+                max-height 0.3s ease,
+                visibility 0.3s ease;
 }
 
 .engine-list.show {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    max-height: 350px;
 }
 
 .engine-icon {
@@ -102,7 +109,7 @@ body {
 .engine-option {
     padding: 10px;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 16px;
     transition: all 0.2s;
     display: flex;
     align-items: center;
@@ -131,7 +138,7 @@ body {
     padding: 0;
     border: none;
     background: rgba(255, 255, 255, 0);
-    border-radius: 0 20px 20px 0;
+    border-radius: 0 16px 16px 0;
     cursor: pointer;
     flex-shrink: 0;
     display: flex;
@@ -146,16 +153,27 @@ body {
 }
 
 .search-suggestions {
-    max-width: 600px;
+    width: 600px;
     margin: 0 auto;
-	margin-top: 8px;
-	overflow: hidden;
-    border-radius: 25px;
-    -webkit-backdrop-filter: blur(20px);
+    margin-top: 8px;
+    /* padding: 8px; */
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
+    border-radius: 16px;
     backdrop-filter: blur(20px);
-    background: rgba(255, 255, 255, 0.9) border-box;
+    background: rgba(255, 255, 255, 0.9);
     box-shadow: var(--primary-shadow);
-    text-shadow: var(--primary-text-shadow);
+    transition: opacity 0.3s ease, 
+                max-height 0.3s ease,
+                visibility 0.3s ease;
+}
+
+.search-suggestions.show {
+    opacity: 1;
+    visibility: visible;
+    max-height: 400px;
 }
 
 .suggestion-item {
@@ -166,6 +184,7 @@ body {
     font-size: 15px;
     cursor: pointer;
     gap: 10px;
+    border-radius: 16px;
     color: rgba(53, 53, 53, 1);
     transition: background-color 0.2s;
 }
@@ -215,7 +234,7 @@ body {
 .nav-highlight {
     position: absolute;
     background: rgba(66, 133, 244, 1);
-    border-radius: 6px;
+    border-radius: 16px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     width: calc(100% - 24px);
     left: 12px;
@@ -295,7 +314,7 @@ body {
     .search-container {
         width: 90%;
         height: 44px;
-        border-radius: 18px;
+        border-radius: 16px;
     }
 
     .engine-select {
@@ -309,7 +328,6 @@ body {
 
     .search-suggestions {
         max-width: 90%;
-        width: 100%;
     }
 
     .nav-wrapper {
@@ -346,7 +364,7 @@ body {
     }
 }
 
-.bottom{
+.bottom {
     height: 35px;
     margin-top: 30px;
 }
