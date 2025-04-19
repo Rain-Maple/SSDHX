@@ -15,8 +15,7 @@
 
 body {
     user-select: none;
-    background: url(./images/img.jpg) rgba(200, 200, 200, 0.5) no-repeat fixed;
-    /* background: no-repeat fixed; */
+    background: no-repeat fixed;
     background-size: cover;
     background-position: center;
     background-blend-mode: multiply;
