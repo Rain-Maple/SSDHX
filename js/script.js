@@ -121,7 +121,6 @@
                 // 鼠标悬停事件
                 item.addEventListener('mouseenter', () => {
                     state.activeSuggestion = index;
-                    searchInput.value = keyword;
                     updateActiveSuggestion();
                 });
                 
@@ -137,6 +136,7 @@
                 item.addEventListener('click', () => {
                     searchInput.value = keyword;
                     suggestionsContainer.classList.remove('show');
+                    performSearch();
                 });
                 
                 suggestionsContainer.appendChild(item);
