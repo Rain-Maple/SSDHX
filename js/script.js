@@ -31,7 +31,9 @@
         document.querySelectorAll('.engine-option').forEach(option => {
             option.addEventListener('click', () => {
                 state.currentEngine = option.dataset.engine;
-                engineBtn.replaceChildren(option.cloneNode(true));
+                const clonedIcon = option.querySelector('.engine-icon').cloneNode(true);
+                clonedIcon.alt = `${state.currentEngine} logo`;
+                engineBtn.replaceChildren(clonedIcon);
                 engineList.classList.remove('show');
             });
         });
