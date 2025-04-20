@@ -266,7 +266,7 @@ body {
 
 .nav-items {
     display: none;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
     gap: 15px;
     animation: fadeIn 0.3s;
 }
