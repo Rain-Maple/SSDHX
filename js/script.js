@@ -1,7 +1,10 @@
+// 搜索和导航功能模块
+// 该模块实现了搜索引擎选择、搜索建议、搜索功能和导航栏的交互
 (function () {
     'use strict';
 
-    // 配置常量
+    // 搜索引擎配置
+    // 使用Object.freeze()来防止对象被修改
     const ENGINES = Object.freeze({
         bing: { icon: 'images/bing.svg', url: 'https://www.bing.com/search?q=' },
         baidu: { icon: 'images/baidu.svg', url: 'https://www.baidu.com/s?wd=' },
@@ -58,10 +61,10 @@
             }
         };
 
-        // 事件绑定
+        // 搜索按钮点击事件
         searchBtn.addEventListener('click', performSearch);
 
-        // 输入处理
+        // 搜索输入框输入处理
         searchInput.addEventListener('input', handleSearchInput);
         searchInput.addEventListener('keydown', handleKeyNavigation);
         document.addEventListener('click', handleClickOutside);
@@ -85,6 +88,8 @@
             }
         }
 
+        // 百度搜索建议API
+        // 通过动态创建script标签来获取百度搜索建议
         function getSuggestions(keyword) {
             const script = document.createElement('script');
             script.src = `https://www.baidu.com/su?wd=${encodeURIComponent(keyword)}&cb=handleBaiduResponse`;
@@ -98,6 +103,8 @@
             document.body.appendChild(script);
         }
 
+        // 显示搜索建议
+        // 通过动态创建div标签来显示搜索建议
         function showSuggestions(keywords) {
             suggestionsContainer.innerHTML = '';
             state.activeSuggestion = -1;
@@ -111,15 +118,25 @@
                     ${keyword}
                 `;
 
+                // 鼠标悬停事件
                 item.addEventListener('mouseenter', () => {
                     state.activeSuggestion = index;
+                    searchInput.value = keyword;
                     updateActiveSuggestion();
                 });
                 
+                // 触摸事件
+                item.addEventListener('touchstart', () => {
+                    state.activeSuggestion = index;
+                    searchInput.value = keyword;
+                    updateActiveSuggestion();
+                    e.preventDefault(); // 防止触发click事件
+                });
+
+                // 点击事件（仅填充不执行搜索）
                 item.addEventListener('click', () => {
                     searchInput.value = keyword;
                     suggestionsContainer.classList.remove('show');
-                    performSearch();
                 });
                 
                 suggestionsContainer.appendChild(item);
@@ -129,9 +146,10 @@
             suggestionsContainer.classList.toggle('show', hasSuggestions);
         }
 
-        // 键盘导航
+        // 键盘导航处理
+        // 通过键盘事件来处理搜索建议的选择和搜索操作
         function handleKeyNavigation(e) {
-            if (!suggestionsContainer || suggestionsContainer.style.display === 'none') {
+            if (!suggestionsContainer.classList.contains('show')) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     performSearch();
@@ -146,6 +164,7 @@
                         state.activeSuggestion >= state.suggestionsData.length - 1 
                             ? 0 
                             : state.activeSuggestion + 1;
+                    searchInput.value = state.suggestionsData[state.activeSuggestion];
                     break;
                 case 'ArrowUp':
                     e.preventDefault();
@@ -153,23 +172,23 @@
                         state.activeSuggestion <= 0 
                             ? state.suggestionsData.length - 1 
                             : state.activeSuggestion - 1;
+                    searchInput.value = state.suggestionsData[state.activeSuggestion];
                     break;
                 case 'Enter':
                     e.preventDefault();
-                    if (state.activeSuggestion > -1) {
-                        searchInput.value = state.suggestionsData[state.activeSuggestion];
-                        suggestionsContainer.style.display = 'none';
-                    }
+                    suggestionsContainer.classList.remove('show');
                     performSearch();
                     break;
                 case 'Escape':
-                    suggestionsContainer.style.display = 'none';
+                    suggestionsContainer.classList.remove('show');
                     state.activeSuggestion = -1;
                     break;
             }
             updateActiveSuggestion();
         }
 
+        // 更新高亮的搜索建议
+        // 通过动态添加active类来高亮当前选中的搜索建议
         function updateActiveSuggestion() {
             const items = suggestionsContainer.querySelectorAll('.suggestion-item');
             items.forEach((item, index) => {
@@ -179,52 +198,59 @@
             });
         }
 
+        // 点击外部区域关闭搜索建议
+        // 通过点击事件来判断是否点击在搜索建议区域外
         function handleClickOutside(e) {
             if (!e.target.closest('.search-container')) {
                 suggestionsContainer.classList.remove('show');
-                state.activeSuggestion = -1;
+                state.activeSuggestion = -1; // 清除高亮
             }
         }
     }
 
-    // 导航模块
-function initNavigation() {
-    const navCategories = document.querySelector('.nav-categories');
-    const navHighlight = document.querySelector('.nav-highlight');
-    const initialActive = document.querySelector('.nav-category.active'); // 初始化选择器
+    // 导航栏模块
+    // 该模块实现了导航栏的交互，包括高亮显示和点击切换
+    function initNavigation() {
+        const navCategories = document.querySelector('.nav-categories'); // 导航分类
+        const navHighlight = document.querySelector('.nav-highlight'); // 高亮元素
+        const initialActive = document.querySelector('.nav-category.active'); // 初始化选择器
 
-    // 初始化高亮
-    if (initialActive) {
-        updateHighlight(initialActive);
-        navHighlight.style.opacity = '1'; // 确保高亮可见
-    }
+        // 设置高亮元素的初始位置和大小
+        if (initialActive) {
+            updateHighlight(initialActive); // 更新高亮位置
+            navHighlight.style.opacity = '1'; // 显示高亮元素
+        }
 
-    document.querySelectorAll('.nav-category').forEach(category => {
-        category.addEventListener('click', function() {
-            document.querySelectorAll('.nav-category').forEach(c => 
-                c.classList.remove('active')
-            );
-            this.classList.add('active');
-            updateHighlight(this);
-            
-            document.querySelectorAll('.nav-items').forEach(item => {
-                item.classList.remove('active');
-                item.dataset.category === this.dataset.category && 
-                    item.classList.add('active');
-            });
+        // 点击导航分类事件
+        // 通过点击事件来处理导航分类的切换和高亮显示
+        document.querySelectorAll('.nav-category').forEach(category => {
+            category.addEventListener('click', function() {
+                document.querySelectorAll('.nav-category').forEach(c => 
+                    c.classList.remove('active')
+                );
+                this.classList.add('active');
+                updateHighlight(this);
 
-            if (window.matchMedia("(max-width: 768px)").matches) {
-                this.parentElement.scrollTo({
-                    left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
-                    behavior: 'smooth'
+                document.querySelectorAll('.nav-items').forEach(item => {
+                    item.classList.remove('active');
+                    item.dataset.category === this.dataset.category && 
+                        item.classList.add('active');
                 });
-            }
-        });
-    });
 
+                if (window.matchMedia("(max-width: 768px)").matches) {
+                    this.parentElement.scrollTo({
+                        left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 更新高亮元素位置和大小
+        // 通过动态计算元素的offset和大小来更新高亮元素的位置和大小
         function updateHighlight(target) {
             const isMobile = window.matchMedia("(max-width: 768px)").matches;
-            
+
             if (isMobile) {
                 navHighlight.style.cssText = `
                     width: ${target.offsetWidth}px;
@@ -243,10 +269,12 @@ function initNavigation() {
             }
         }
 
+        // 监听窗口大小变化事件
+        // 通过resize事件来处理窗口大小变化时的高亮元素位置更新
         window.addEventListener('resize', () => {
             const active = document.querySelector('.nav-category.active');
             if (!active) return;
-
+        
             navHighlight.style.transition = 'none';
             updateHighlight(active);
             setTimeout(() => {
