@@ -164,10 +164,23 @@ class PasswordGenerator extends HTMLElement {
   _showFeedback(text) {
     const feedback = document.createElement('div');
     feedback.textContent = text;
-    feedback.style = /* 样式代码 */;
+    feedback.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 1000;
+    `;
     document.body.appendChild(feedback);
     setTimeout(() => feedback.remove(), 2000);
   }
 }
 
-customElements.define('password-generator', PasswordGenerator);
+if (!customElements.get('password-generator')) {
+  customElements.define('password-generator', PasswordGenerator);
+}
