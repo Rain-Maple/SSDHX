@@ -37,12 +37,12 @@ class FloatingTools extends HTMLElement {
   }
 
   toggleGenerator() {
-    const existing = document.querySelector('password-generator');
+    const existing = document.querySelector('pw2');
     existing ? existing.remove() : this._showGenerator();
   }
 
   _showGenerator() {
-    const generator = document.createElement('password-generator');
+    const generator = document.createElement('pw2');
     generator.style.position = 'fixed';
     generator.style.top = '50%';
     generator.style.left = '50%';
