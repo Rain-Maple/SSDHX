@@ -33,7 +33,6 @@ class PasswordGenerator extends HTMLElement {
         }
 
         #password-output {
-          width: 100%;
           padding: 12px;
           border: 2px solid #ddd;
           border-radius: 8px;
@@ -87,7 +86,7 @@ class PasswordGenerator extends HTMLElement {
 
       <div class="container">
         <div class="result-area">
-          <input type="text" id="password-output" readonly placeholder="点击生成密码">
+          <input type="text" id="password-output" readonly placeholder="请点击生成密码按钮">
         </div>
         
         <div class="options">
@@ -98,15 +97,15 @@ class PasswordGenerator extends HTMLElement {
           </div>
           <div>
             <input type="checkbox" id="uppercase" checked>
-            <label for="uppercase">大写字母</label>
+            <label for="uppercase">包含大写</label>
           </div>
           <div>
             <input type="checkbox" id="numbers" checked>
-            <label for="numbers">数字</label>
+            <label for="numbers">包含数字</label>
           </div>
           <div>
             <input type="checkbox" id="symbols">
-            <label for="symbols">符号</label>
+            <label for="symbols">包含符号</label>
           </div>
         </div>
 
