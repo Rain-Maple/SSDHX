@@ -145,7 +145,8 @@ class PasswordGenerator extends HTMLElement {
         .generate-btn {
           width: 100%;
           padding: 12px;
-          background: var(--primary-color);
+          /* background: var(--primary-color); */
+          background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
           border: none;
           border-radius: 8px;
