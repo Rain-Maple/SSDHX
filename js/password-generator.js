@@ -160,7 +160,7 @@ class PasswordGenerator extends HTMLElement {
         
         <div class="result-area">
           <div id="password-output" readonly placeholder="请点击生成密码按钮"></div>
-          <div class="hint click-hint">请点击密码框密码以复制</div>
+          <div class="hint click-hint">点击密码框密码就可复制</div>
           <div class="hint copied-hint">已复制</div>
         </div>
 
@@ -290,13 +290,8 @@ class PasswordGenerator extends HTMLElement {
     this.$copiedHint.style.display = 'block';
     setTimeout(() => {
       this.$copiedHint.style.display = 'none';
-    }, 2000);
+    }, 60000);
   }
-}
-
-_handleOutsideClick(e) {
-  const isInside = this.shadowRoot.contains(e.target);
-  if (!isInside) this.remove();
 }
 
 // 注册组件
