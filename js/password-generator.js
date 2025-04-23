@@ -14,7 +14,7 @@ class PasswordGenerator extends HTMLElement {
       <style>
         :host {
           --primary-color: #2196F3;
-          --background: rgba(255, 255, 255, 0.6);
+          --background: rgba(255, 255, 255, 0.95);
           --border-radius: 12px;
           display: block;
           font-family: system-ui;
@@ -33,37 +33,16 @@ class PasswordGenerator extends HTMLElement {
           padding: 25px;
           background: var(--background);
           border-radius: var(--border-radius);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
           user-select: none;
         }
 
         .header {
           cursor: move;
-          font-size: 20px;
           padding: 0 0 15px 0;
           font-weight: bold;
           color: var(--primary-color);
           text-align: center;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: relative;
-        }
-
-        .close-btn {
-          background: none;
-          border: none;
-          font-size: 20px;
-          cursor: pointer;
-          color: #999;
-          padding: 0;
-          line-height: 1;
-          position: absolute;
-          right: 0;
-        }
-
-        .close-btn:hover {
-          color: #666;
         }
 
         .result-area {
@@ -84,11 +63,9 @@ class PasswordGenerator extends HTMLElement {
           cursor: pointer;
           transition: all 0.3s;
           text-align: center;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           word-break: break-all;
           overflow: auto;
+          color: #666;
         }
 
         .hint {
@@ -239,14 +216,11 @@ class PasswordGenerator extends HTMLElement {
       </style>
 
       <div class="container">
-        <div class="header">
-          <span>密码生成器</span>
-          <button class="close-btn">&times;</button>
-        </div>
+        <div class="header">密码生成器</div>
         
         <div class="result-area">
-          <div id="password-output"></div>
-          <div class="hint click-hint">点击密码就可复制</div>
+          <div id="password-output">请点击生成密码按钮</div>
+          <div class="hint click-hint">点击复制</div>
           <div class="hint copied-hint">已复制</div>
         </div>
 
@@ -259,7 +233,7 @@ class PasswordGenerator extends HTMLElement {
           <div class="option-item">
             <label for="uppercase">包含大写</label>
             <label class="switch">
-              <input type="checkbox" id="uppercase" checked>
+              <input type="checkbox" id="uppercase">
               <span class="slider"></span>
             </label>
           </div>
@@ -298,7 +272,6 @@ class PasswordGenerator extends HTMLElement {
     this.$lengthValue = this.shadowRoot.getElementById('length-value');
     this.$clickHint = this.shadowRoot.querySelector('.click-hint');
     this.$copiedHint = this.shadowRoot.querySelector('.copied-hint');
-    this.$closeBtn = this.shadowRoot.querySelector('.close-btn');
     this.$uppercase = this.shadowRoot.getElementById('uppercase');
     this.$lowercase = this.shadowRoot.getElementById('lowercase');
     this.$numbers = this.shadowRoot.getElementById('numbers');
@@ -311,11 +284,9 @@ class PasswordGenerator extends HTMLElement {
       this.$lengthValue.textContent = this.$length.value;
     });
     this.$output.addEventListener('click', () => this.copyToClipboard());
-    this.$closeBtn.addEventListener('click', () => this.remove());
   }
 
   _initDrag() {
-    const container = this.shadowRoot.querySelector('.container');
     const header = this.shadowRoot.querySelector('.header');
     
     let isDragging = false;
@@ -325,7 +296,6 @@ class PasswordGenerator extends HTMLElement {
     let initialY = 0;
 
     const startDrag = (e) => {
-      if (e.target.classList.contains('close-btn')) return;
       isDragging = true;
       startX = e.clientX || e.touches[0].clientX;
       startY = e.clientY || e.touches[0].clientY;
@@ -387,11 +357,13 @@ class PasswordGenerator extends HTMLElement {
 
     const password = this._generatePassword(config);
     this.$output.textContent = password;
+    this.$output.style.color = '#000'; // 生成密码后改为黑色文字
     
     if (!password.startsWith('请至少选择一种字符类型')) {
       this.$clickHint.style.display = 'block';
     } else {
       this.$clickHint.style.display = 'none';
+      this.$output.style.color = '#666'; // 错误提示保持灰色
     }
   }
 
@@ -411,6 +383,7 @@ class PasswordGenerator extends HTMLElement {
 
   async copyToClipboard() {
     if (!this.$output.textContent || 
+        this.$output.textContent === '请点击生成密码按钮' || 
         this.$output.textContent.startsWith('请至少选择一种字符类型')) {
       return;
     }
@@ -420,7 +393,7 @@ class PasswordGenerator extends HTMLElement {
     this.$copiedHint.style.display = 'block';
     setTimeout(() => {
       this.$copiedHint.style.display = 'none';
-    }, 60000);
+    }, 2000);
   }
 }
 
