@@ -26,6 +26,7 @@ class PasswordGenerator extends HTMLElement {
           width: 90%;
           max-width: 500px;
           min-width: 300px;
+          backdrop-filter: blur(10px);
         }
 
         .container {
@@ -112,7 +113,17 @@ class PasswordGenerator extends HTMLElement {
         .option-item {
           display: flex;
           align-items: center;
-          gap: 8px;
+          justify-content: space-between;
+          padding: 12px 15px;
+          background: rgba(255, 255, 255, 0.5);
+          backdrop-filter: blur(5px);
+          border-radius: 8px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          transition: all 0.3s;
+        }
+
+        .option-item:hover {
+          background: rgba(255, 255, 255, 0.7);
         }
 
         .length-control {
@@ -120,6 +131,11 @@ class PasswordGenerator extends HTMLElement {
           align-items: center;
           gap: 10px;
           margin-bottom: 15px;
+          padding: 12px 15px;
+          background: rgba(255, 255, 255, 0.5);
+          backdrop-filter: blur(5px);
+          border-radius: 8px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         input[type="range"] {
@@ -136,12 +152,53 @@ class PasswordGenerator extends HTMLElement {
           cursor: pointer;
           transition: transform 0.1s;
           font-size: 16px;
+          margin-top: 10px;
         }
 
-        input[type="checkbox"] {
-          margin: 0;
-          width: 16px;
+        /* 滑动开关样式 */
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 50px;
+          height: 24px;
+        }
+
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          transition: .4s;
+          border-radius: 24px;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
           height: 16px;
+          width: 16px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          transition: .4s;
+          border-radius: 50%;
+        }
+
+        input:checked + .slider {
+          background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(26px);
         }
 
         @media (max-width: 480px) {
@@ -170,6 +227,10 @@ class PasswordGenerator extends HTMLElement {
           .generate-btn {
             padding: 10px;
           }
+          
+          .option-item {
+            padding: 10px 12px;
+          }
         }
       </style>
 
@@ -181,7 +242,7 @@ class PasswordGenerator extends HTMLElement {
         
         <div class="result-area">
           <div id="password-output" readonly placeholder="请点击生成密码按钮"></div>
-          <div class="hint click-hint">点击密码框密码就可复制</div>
+          <div class="hint click-hint">点击复制</div>
           <div class="hint copied-hint">已复制</div>
         </div>
 
@@ -192,20 +253,32 @@ class PasswordGenerator extends HTMLElement {
             <span id="length-value">16</span>
           </div>
           <div class="option-item">
-            <input type="checkbox" id="uppercase" checked>
             <label for="uppercase">包含大写</label>
+            <label class="switch">
+              <input type="checkbox" id="uppercase">
+              <span class="slider"></span>
+            </label>
           </div>
           <div class="option-item">
-            <input type="checkbox" id="lowercase" checked>
             <label for="lowercase">包含小写</label>
+            <label class="switch">
+              <input type="checkbox" id="lowercase" checked>
+              <span class="slider"></span>
+            </label>
           </div>
           <div class="option-item">
-            <input type="checkbox" id="numbers" checked>
             <label for="numbers">包含数字</label>
+            <label class="switch">
+              <input type="checkbox" id="numbers" checked>
+              <span class="slider"></span>
+            </label>
           </div>
           <div class="option-item">
-            <input type="checkbox" id="symbols" checked>
             <label for="symbols">包含符号</label>
+            <label class="switch">
+              <input type="checkbox" id="symbols" checked>
+              <span class="slider"></span>
+            </label>
           </div>
         </div>
 
@@ -222,6 +295,10 @@ class PasswordGenerator extends HTMLElement {
     this.$clickHint = this.shadowRoot.querySelector('.click-hint');
     this.$copiedHint = this.shadowRoot.querySelector('.copied-hint');
     this.$closeBtn = this.shadowRoot.querySelector('.close-btn');
+    this.$uppercase = this.shadowRoot.getElementById('uppercase');
+    this.$lowercase = this.shadowRoot.getElementById('lowercase');
+    this.$numbers = this.shadowRoot.getElementById('numbers');
+    this.$symbols = this.shadowRoot.getElementById('symbols');
   }
 
   _initEventListeners() {
@@ -286,24 +363,22 @@ class PasswordGenerator extends HTMLElement {
       }
     };
     
-    // 使用setTimeout确保事件在冒泡阶段被捕获
     setTimeout(() => {
       document.addEventListener('click', this._outsideClickHandler);
     }, 0);
   }
 
   disconnectedCallback() {
-    // 组件移除时清理事件监听
     document.removeEventListener('click', this._outsideClickHandler);
   }
 
   generate() {
     const config = {
       length: parseInt(this.$length.value),
-      uppercase: this.shadowRoot.getElementById('uppercase').checked,
-      lowercase: this.shadowRoot.getElementById('lowercase').checked,
-      numbers: this.shadowRoot.getElementById('numbers').checked,
-      symbols: this.shadowRoot.getElementById('symbols').checked
+      uppercase: this.$uppercase.checked,
+      lowercase: this.$lowercase.checked,
+      numbers: this.$numbers.checked,
+      symbols: this.$symbols.checked
     };
 
     const password = this._generatePassword(config);
@@ -332,11 +407,10 @@ class PasswordGenerator extends HTMLElement {
     this.$copiedHint.style.display = 'block';
     setTimeout(() => {
       this.$copiedHint.style.display = 'none';
-    }, 60000);
+    }, 2000);
   }
 }
 
-// 注册组件
 if (!customElements.get('password-generator')) {
   customElements.define('password-generator', PasswordGenerator);
 }
