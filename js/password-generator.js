@@ -39,6 +39,7 @@ class PasswordGenerator extends HTMLElement {
 
         .header {
           cursor: move;
+          font-size: 20px;
           padding: 0 0 15px 0;
           font-weight: bold;
           color: var(--primary-color);
@@ -256,9 +257,9 @@ class PasswordGenerator extends HTMLElement {
             <span id="length-value">16</span>
           </div>
           <div class="option-item">
-            <label for="uppercase">包含大写</label checked>
+            <label for="uppercase">包含大写</label>
             <label class="switch">
-              <input type="checkbox" id="uppercase">
+              <input type="checkbox" id="uppercase" checked>
               <span class="slider"></span>
             </label>
           </div>
