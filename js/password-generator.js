@@ -14,7 +14,7 @@ class PasswordGenerator extends HTMLElement {
       <style>
         :host {
           --primary-color: #2196F3;
-          --background: rgba(255, 255, 255, 0.95);
+          --background: rgba(255, 255, 255, 0.6);
           --border-radius: 12px;
           display: block;
           font-family: system-ui;
@@ -39,6 +39,7 @@ class PasswordGenerator extends HTMLElement {
 
         .header {
           cursor: move;
+          font-size: 20px;
           padding: 0 0 15px 0;
           font-weight: bold;
           color: var(--primary-color);
@@ -220,7 +221,7 @@ class PasswordGenerator extends HTMLElement {
         
         <div class="result-area">
           <div id="password-output">请点击生成密码按钮</div>
-          <div class="hint click-hint">点击复制</div>
+          <div class="hint click-hint">点击密码就可复制</div>
           <div class="hint copied-hint">已复制</div>
         </div>
 
@@ -233,7 +234,7 @@ class PasswordGenerator extends HTMLElement {
           <div class="option-item">
             <label for="uppercase">包含大写</label>
             <label class="switch">
-              <input type="checkbox" id="uppercase">
+              <input type="checkbox" id="uppercase" checked>
               <span class="slider"></span>
             </label>
           </div>
@@ -393,7 +394,7 @@ class PasswordGenerator extends HTMLElement {
     this.$copiedHint.style.display = 'block';
     setTimeout(() => {
       this.$copiedHint.style.display = 'none';
-    }, 2000);
+    }, 60000);
   }
 }
 
