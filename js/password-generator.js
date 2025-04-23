@@ -33,7 +33,7 @@ class PasswordGenerator extends HTMLElement {
           padding: 25px;
           background: var(--background);
           border-radius: var(--border-radius);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
           user-select: none;
         }
 
