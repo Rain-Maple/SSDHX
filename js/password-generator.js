@@ -14,7 +14,7 @@ class PasswordGenerator extends HTMLElement {
       <style>
         :host {
           --primary-color: #2196F3;
-          --background: rgba(255, 255, 255, 0.95);
+          --background: rgba(255, 255, 255, 0.6);
           --border-radius: 12px;
           display: block;
           font-family: system-ui;
