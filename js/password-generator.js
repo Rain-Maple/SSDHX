@@ -294,6 +294,11 @@ class PasswordGenerator extends HTMLElement {
   }
 }
 
+_handleOutsideClick(e) {
+  const isInside = this.shadowRoot.contains(e.target);
+  if (!isInside) this.remove();
+}
+
 // 注册组件
 if (!customElements.get('password-generator')) {
   customElements.define('password-generator', PasswordGenerator);
