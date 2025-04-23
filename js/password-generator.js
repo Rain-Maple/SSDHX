@@ -39,6 +39,7 @@ class PasswordGenerator extends HTMLElement {
 
         .header {
           cursor: move;
+          font-size: 20px;
           padding: 0 0 15px 0;
           font-weight: bold;
           color: var(--primary-color);
@@ -71,7 +72,7 @@ class PasswordGenerator extends HTMLElement {
           width: 100%;
           box-sizing: border-box;
           padding: 20px 12px;
-          height: 60px;
+          height: 65px;
           border: 2px solid #ddd;
           border-radius: 8px;
           font-size: 16px;
@@ -145,8 +146,8 @@ class PasswordGenerator extends HTMLElement {
         .generate-btn {
           width: 100%;
           padding: 12px;
-          /* background: var(--primary-color); */
-          background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: var(--primary-color);
+          // background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
           border: none;
           border-radius: 8px;
