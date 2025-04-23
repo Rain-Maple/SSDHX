@@ -155,7 +155,6 @@ class PasswordGenerator extends HTMLElement {
           margin-top: 10px;
         }
 
-        /* 滑动开关样式 */
         .switch {
           position: relative;
           display: inline-block;
@@ -242,7 +241,7 @@ class PasswordGenerator extends HTMLElement {
         
         <div class="result-area">
           <div id="password-output" readonly placeholder="请点击生成密码按钮"></div>
-          <div class="hint click-hint">点击复制</div>
+          <div class="hint click-hint">点击密码框密码就可复制</div>
           <div class="hint copied-hint">已复制</div>
         </div>
 
@@ -255,7 +254,7 @@ class PasswordGenerator extends HTMLElement {
           <div class="option-item">
             <label for="uppercase">包含大写</label>
             <label class="switch">
-              <input type="checkbox" id="uppercase">
+              <input type="checkbox" id="uppercase" checked>
               <span class="slider"></span>
             </label>
           </div>
@@ -383,7 +382,13 @@ class PasswordGenerator extends HTMLElement {
 
     const password = this._generatePassword(config);
     this.$output.textContent = password;
-    this.$clickHint.style.display = 'block';
+    
+    // 只有当密码不是错误提示时才显示"点击复制"
+    if (!password.startsWith('请至少选择一种字符类型')) {
+      this.$clickHint.style.display = 'block';
+    } else {
+      this.$clickHint.style.display = 'none';
+    }
   }
 
   _generatePassword({ length, uppercase, lowercase, numbers, symbols }) {
@@ -401,13 +406,19 @@ class PasswordGenerator extends HTMLElement {
   }
 
   async copyToClipboard() {
-    if (!this.$output.textContent || this.$output.textContent === '请点击生成密码按钮') return;
+    // 如果密码为空、是初始提示或是错误提示，则不执行复制操作
+    if (!this.$output.textContent || 
+        this.$output.textContent === '请点击生成密码按钮' || 
+        this.$output.textContent.startsWith('请至少选择一种字符类型')) {
+      return;
+    }
+    
     await navigator.clipboard.writeText(this.$output.textContent);
     this.$clickHint.style.display = 'none';
     this.$copiedHint.style.display = 'block';
     setTimeout(() => {
       this.$copiedHint.style.display = 'none';
-    }, 2000);
+    }, 60000);
   }
 }
 
