@@ -160,7 +160,7 @@ class PasswordGenerator extends HTMLElement {
         
         <div class="result-area">
           <div id="password-output" readonly placeholder="请点击生成密码按钮"></div>
-          <div class="hint click-hint">点击复制</div>
+          <div class="hint click-hint">请点击密码框密码以复制</div>
           <div class="hint copied-hint">已复制</div>
         </div>
 
@@ -171,7 +171,7 @@ class PasswordGenerator extends HTMLElement {
             <span id="length-value">16</span>
           </div>
           <div class="option-item">
-            <input type="checkbox" id="uppercase">
+            <input type="checkbox" id="uppercase" checked>
             <label for="uppercase">包含大写</label>
           </div>
           <div class="option-item">
