@@ -14,7 +14,7 @@ class PasswordGenerator extends HTMLElement {
       <style>
         :host {
           --primary-color: #2196F3;
-          --background: rgba(255, 255, 255, 0.65);
+          --background: rgba(255, 255, 255, 0.95);
           --border-radius: 12px;
           display: block;
           font-family: system-ui;
@@ -33,30 +33,32 @@ class PasswordGenerator extends HTMLElement {
           padding: 25px;
           background: var(--background);
           border-radius: var(--border-radius);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
           user-select: none;
         }
 
         .header {
           cursor: move;
-          font-size: 20px;
           padding: 0 0 15px 0;
           font-weight: bold;
           color: var(--primary-color);
           text-align: center;
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           align-items: center;
+          position: relative;
         }
 
         .close-btn {
           background: none;
           border: none;
-          font-size: 22px;
+          font-size: 20px;
           cursor: pointer;
           color: #999;
           padding: 0;
           line-height: 1;
+          position: absolute;
+          right: 0;
         }
 
         .close-btn:hover {
@@ -71,8 +73,9 @@ class PasswordGenerator extends HTMLElement {
         #password-output {
           width: 100%;
           box-sizing: border-box;
-          padding: 20px 12px;
+          padding: 0 12px;
           height: 65px;
+          line-height: 65px;
           border: 2px solid #ddd;
           border-radius: 8px;
           font-size: 16px;
@@ -147,7 +150,6 @@ class PasswordGenerator extends HTMLElement {
           width: 100%;
           padding: 12px;
           background: var(--primary-color);
-          // background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
           border: none;
           border-radius: 8px;
@@ -212,9 +214,9 @@ class PasswordGenerator extends HTMLElement {
           }
           
           #password-output {
-            height: 80px;
+            height: 65px;
+            line-height: 65px;
             font-size: 14px;
-            padding: 15px;
           }
           
           .options {
@@ -242,8 +244,8 @@ class PasswordGenerator extends HTMLElement {
         </div>
         
         <div class="result-area">
-          <div id="password-output" readonly placeholder="请点击生成密码按钮"></div>
-          <div class="hint click-hint">点击密码框密码就可复制</div>
+          <div id="password-output"></div>
+          <div class="hint click-hint">点击密码就可复制</div>
           <div class="hint copied-hint">已复制</div>
         </div>
 
@@ -254,9 +256,9 @@ class PasswordGenerator extends HTMLElement {
             <span id="length-value">16</span>
           </div>
           <div class="option-item">
-            <label for="uppercase">包含大写</label>
+            <label for="uppercase">包含大写</label checked>
             <label class="switch">
-              <input type="checkbox" id="uppercase" checked>
+              <input type="checkbox" id="uppercase">
               <span class="slider"></span>
             </label>
           </div>
@@ -385,7 +387,6 @@ class PasswordGenerator extends HTMLElement {
     const password = this._generatePassword(config);
     this.$output.textContent = password;
     
-    // 只有当密码不是错误提示时才显示"点击复制"
     if (!password.startsWith('请至少选择一种字符类型')) {
       this.$clickHint.style.display = 'block';
     } else {
@@ -408,9 +409,7 @@ class PasswordGenerator extends HTMLElement {
   }
 
   async copyToClipboard() {
-    // 如果密码为空、是初始提示或是错误提示，则不执行复制操作
     if (!this.$output.textContent || 
-        this.$output.textContent === '请点击生成密码按钮' || 
         this.$output.textContent.startsWith('请至少选择一种字符类型')) {
       return;
     }
