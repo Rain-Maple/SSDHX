@@ -6,6 +6,7 @@ class PasswordGenerator extends HTMLElement {
     this._initElements();
     this._initEventListeners();
     this._initDrag();
+    this._initClickOutside();
   }
 
   _initTemplate() {
@@ -41,6 +42,23 @@ class PasswordGenerator extends HTMLElement {
           font-weight: bold;
           color: var(--primary-color);
           text-align: center;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .close-btn {
+          background: none;
+          border: none;
+          font-size: 20px;
+          cursor: pointer;
+          color: #999;
+          padding: 0;
+          line-height: 1;
+        }
+
+        .close-btn:hover {
+          color: #666;
         }
 
         .result-area {
@@ -156,7 +174,10 @@ class PasswordGenerator extends HTMLElement {
       </style>
 
       <div class="container">
-        <div class="header">密码生成器</div>
+        <div class="header">
+          <span>密码生成器</span>
+          <button class="close-btn">&times;</button>
+        </div>
         
         <div class="result-area">
           <div id="password-output" readonly placeholder="请点击生成密码按钮"></div>
@@ -200,6 +221,7 @@ class PasswordGenerator extends HTMLElement {
     this.$lengthValue = this.shadowRoot.getElementById('length-value');
     this.$clickHint = this.shadowRoot.querySelector('.click-hint');
     this.$copiedHint = this.shadowRoot.querySelector('.copied-hint');
+    this.$closeBtn = this.shadowRoot.querySelector('.close-btn');
   }
 
   _initEventListeners() {
@@ -208,6 +230,7 @@ class PasswordGenerator extends HTMLElement {
       this.$lengthValue.textContent = this.$length.value;
     });
     this.$output.addEventListener('click', () => this.copyToClipboard());
+    this.$closeBtn.addEventListener('click', () => this.remove());
   }
 
   _initDrag() {
@@ -221,6 +244,7 @@ class PasswordGenerator extends HTMLElement {
     let initialY = 0;
 
     const startDrag = (e) => {
+      if (e.target.classList.contains('close-btn')) return;
       isDragging = true;
       startX = e.clientX || e.touches[0].clientX;
       startY = e.clientY || e.touches[0].clientY;
@@ -253,6 +277,24 @@ class PasswordGenerator extends HTMLElement {
 
     header.addEventListener('mousedown', startDrag);
     header.addEventListener('touchstart', startDrag);
+  }
+
+  _initClickOutside() {
+    this._outsideClickHandler = (e) => {
+      if (!this.contains(e.target) && !e.target.shadowRoot?.contains(this)) {
+        this.remove();
+      }
+    };
+    
+    // 使用setTimeout确保事件在冒泡阶段被捕获
+    setTimeout(() => {
+      document.addEventListener('click', this._outsideClickHandler);
+    }, 0);
+  }
+
+  disconnectedCallback() {
+    // 组件移除时清理事件监听
+    document.removeEventListener('click', this._outsideClickHandler);
   }
 
   generate() {
