@@ -51,7 +51,7 @@ class PasswordGenerator extends HTMLElement {
         .close-btn {
           background: none;
           border: none;
-          font-size: 20px;
+          font-size: 26px;
           cursor: pointer;
           color: #999;
           padding: 0;
