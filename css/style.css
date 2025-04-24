@@ -234,7 +234,7 @@ body {
 .nav-highlight {
     position: absolute;
     background: rgba(66, 133, 244, 1);
-    border-radius: 16px;
+    border-radius: 12px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     width: calc(100% - 24px);
     left: 12px;
