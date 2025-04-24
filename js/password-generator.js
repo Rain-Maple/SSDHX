@@ -373,7 +373,7 @@ class PasswordGenerator extends HTMLElement {
     const chars = [
       ...(uppercase ? 'ABCDEFGHJKLMNPQRSTUVWXYZ' : ''),
       ...(lowercase ? 'abcdefghjkmnpqrstuvwxyz' : ''),
-      ...(numbers ? '123456789' : ''),
+      ...(numbers ? '23456789' : ''),
       ...(symbols ? '!@#$%^&*()_+-=[]{}|;:,.<>?' : '')
     ].join('');
 
