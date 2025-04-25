@@ -57,7 +57,7 @@ class PasswordGenerator extends HTMLElement {
           box-sizing: border-box;
           padding: 0 12px;
           height: 65px;
-          line-height: 65px;
+          /* line-height: 65px; */
           border: 2px solid #ddd;
           border-radius: 8px;
           font-size: 16px;
