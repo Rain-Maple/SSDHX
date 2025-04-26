@@ -55,9 +55,8 @@ class PasswordGenerator extends HTMLElement {
         #password-output {
           width: 100%;
           box-sizing: border-box;
-          padding: 0 12px;
+          padding: 20px 12px;
           height: 65px;
-          /* line-height: 65px; */
           border: 2px solid #ddd;
           border-radius: 8px;
           font-size: 16px;
@@ -65,6 +64,9 @@ class PasswordGenerator extends HTMLElement {
           cursor: pointer;
           transition: all 0.3s;
           text-align: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           word-break: break-all;
           overflow: auto;
           color: #666;
@@ -195,7 +197,6 @@ class PasswordGenerator extends HTMLElement {
           
           #password-output {
             height: 65px;
-            line-height: 65px;
             font-size: 14px;
           }
           
