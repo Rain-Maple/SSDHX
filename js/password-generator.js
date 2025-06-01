@@ -257,7 +257,7 @@ class PasswordGenerator extends HTMLElement {
           <div class="option-item">
             <label for="symbols">包含符号</label>
             <label class="switch">
-              <input type="checkbox" id="symbols" checked>
+              <input type="checkbox" id="symbols">
               <span class="slider"></span>
             </label>
           </div>
@@ -291,7 +291,7 @@ class PasswordGenerator extends HTMLElement {
 
   _initDrag() {
     const header = this.shadowRoot.querySelector('.header');
-    
+
     let isDragging = false;
     let startX = 0;
     let startY = 0;
@@ -339,7 +339,7 @@ class PasswordGenerator extends HTMLElement {
         this.remove();
       }
     };
-    
+
     setTimeout(() => {
       document.addEventListener('click', this._outsideClickHandler);
     }, 0);
@@ -361,7 +361,7 @@ class PasswordGenerator extends HTMLElement {
     const password = this._generatePassword(config);
     this.$output.textContent = password;
     this.$output.style.color = '#000'; // 生成密码后改为黑色文字
-    
+
     if (!password.startsWith('请至少选择一种字符类型')) {
       this.$clickHint.style.display = 'block';
     } else {
@@ -379,18 +379,18 @@ class PasswordGenerator extends HTMLElement {
     ].join('');
 
     if (!chars.length) return '请至少选择一种字符类型';
-    
+
     const values = crypto.getRandomValues(new Uint32Array(length));
     return Array.from(values, v => chars[v % chars.length]).join('');
   }
 
   async copyToClipboard() {
-    if (!this.$output.textContent || 
-        this.$output.textContent === '请点击生成密码按钮' || 
-        this.$output.textContent.startsWith('请至少选择一种字符类型')) {
+    if (!this.$output.textContent ||
+      this.$output.textContent === '请点击生成密码按钮' ||
+      this.$output.textContent.startsWith('请至少选择一种字符类型')) {
       return;
     }
-    
+
     await navigator.clipboard.writeText(this.$output.textContent);
     this.$clickHint.style.display = 'none';
     this.$copiedHint.style.display = 'block';
