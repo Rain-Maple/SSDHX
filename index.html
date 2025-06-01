@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <!-- 时间&日期 -->
     <div class="clock-container">
@@ -57,6 +59,7 @@
         <div class="nav-categories"><!-- 导航栏 -->
             <div class="nav-highlight"></div>
             <div class="nav-category active" data-category="zonghe">综合</div>
+            <div class="nav-category" data-category="AI">AI</div>
             <div class="nav-category" data-category="video">视频</div>
             <div class="nav-category" data-category="bbs">论坛</div>
             <div class="nav-category" data-category="tools">工具</div>
@@ -67,7 +70,7 @@
             <div class="nav-category" data-category="tieba">贴吧</div>
             <div class="nav-category" data-category="others">其他</div>
         </div>
-        
+
         <div class="nav-content"><!-- 导航内容 -->
             <div class="nav-items active" data-category="zonghe">
                 <a href="https://www.baidu.com/" class="nav-item" target="_blank" rel="noopener noreferrer">
@@ -101,6 +104,28 @@
                 <a href="https://www.xiaohongshu.com/" class="nav-item" target="_blank" rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=www.xiaohongshu.com/" class="nav-icon" alt="小红书">
                     <div class="nav-text">小红书</div>
+                </a>
+            </div>
+            <div class="nav-items" data-category="AI">
+                <a href="https://chat.deepseek.com/" class="nav-item" target="_blank" rel="noopener noreferrer">
+                    <img src="https://api.xinac.net/icon/?url=chat.deepseek.com/" class="nav-icon" alt="DeepSeek">
+                    <div class="nav-text">DeepSeek</div>
+                </a>
+                <a href="https://www.doubao.com/" class="nav-item" target="_blank" rel="noopener noreferrer">
+                    <img src="https://api.xinac.net/icon/?url=www.doubao.com/" class="nav-icon" alt="豆包">
+                    <div class="nav-text">豆包</div>
+                </a>
+                <a href="https://www.tongyi.com/" class="nav-item" target="_blank" rel="noopener noreferrer">
+                    <img src="https://api.xinac.net/icon/?url=https://www.tongyi.com/" class="nav-icon" alt="通义千问">
+                    <div class="nav-text">通义千问</div>
+                </a>
+                <a href="https://kimi.moonshot.cn/" class="nav-item" target="_blank" rel="noopener noreferrer">
+                    <img src="https://api.xinac.net/icon/?url=kimi.moonshot.cn/" class="nav-icon" alt="Kimi">
+                    <div class="nav-text">Kimi</div>
+                </a>
+                <a href="https://yuanbao.tencent.com/" class="nav-item" target="_blank" rel="noopener noreferrer">
+                    <img src="https://api.xinac.net/icon/?url=yuanbao.tencent.com/" class="nav-icon" alt="元宝">
+                    <div class="nav-text">元宝</div>
                 </a>
             </div>
             <div class="nav-items" data-category="video">
@@ -178,7 +203,8 @@
                 </a>
             </div>
             <div class="nav-items" data-category="Win">
-                <a href="http://www.catalog.update.microsoft.com/home.aspx" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="http://www.catalog.update.microsoft.com/home.aspx" class="nav-item" target="_blank"
+                    rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=www.microsoft.com.cn/" class="nav-icon" alt="Win系统补丁下载">
                     <div class="nav-text">Win系统补丁下载</div>
                 </a>
@@ -186,7 +212,8 @@
                     <img src="https://api.xinac.net/icon/?url=next.itellyou.cn" class="nav-icon" alt="MSDN">
                     <div class="nav-text">MSDN</div>
                 </a>
-                <a href="https://docs.microsoft.com/zh-cn/windows-hardware/manufacture/desktop/winpe-intro?redirectedfrom=MSDN&view=windows-11" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="https://docs.microsoft.com/zh-cn/windows-hardware/manufacture/desktop/winpe-intro?redirectedfrom=MSDN&view=windows-11"
+                    class="nav-item" target="_blank" rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=www.microsoft.com.cn/" class="nav-icon" alt="WinPE">
                     <div class="nav-text">WinPE</div>
                 </a>
@@ -198,7 +225,8 @@
                     <img src="https://api.xinac.net/icon/?url=www.uupdump.cn/" class="nav-icon" alt="UUP.CN">
                     <div class="nav-text">UUP.CN</div>
                 </a>
-                <a href="http://win10se.cwcodes.net/Compressed/index.php" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="http://win10se.cwcodes.net/Compressed/index.php" class="nav-item" target="_blank"
+                    rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=win10se.cwcodes.net/" class="nav-icon" alt="Win10se">
                     <div class="nav-text">Win10se</div>
                 </a>
@@ -209,10 +237,12 @@
                     <div class="nav-text">鸟哥Linux</div>
                 </a>
                 <a href="https://dl.fedoraproject.org/pub/" class="nav-item" target="_blank" rel="noopener noreferrer">
-                    <img src="https://api.xinac.net/icon/?url=fedoraproject.org/" class="nav-icon" alt="CentOS&Fedora第三方下载源">
+                    <img src="https://api.xinac.net/icon/?url=fedoraproject.org/" class="nav-icon"
+                        alt="CentOS&Fedora第三方下载源">
                     <div class="nav-text">CentOS&Fedora第三方下载源</div>
                 </a>
-                <a href="https://download.virtualbox.org/virtualbox/" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="https://download.virtualbox.org/virtualbox/" class="nav-item" target="_blank"
+                    rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=www.virtualbox.org/" class="nav-icon" alt="VirtualBox下载">
                     <div class="nav-text">VirtualBox下载</div>
                 </a>
@@ -220,11 +250,13 @@
                     <img src="https://api.xinac.net/icon/?url=www.centos.org/" class="nav-icon" alt="CentOS官方下载源">
                     <div class="nav-text">CentOS官方下载源</div>
                 </a>
-                <a href="https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/" class="nav-item"
+                    target="_blank" rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=fedoraproject.org/" class="nav-icon" alt="Fedora全版本下载">
                     <div class="nav-text">Fedora全版本下载</div>
                 </a>
-                <a href="https://github.com/rfancn/aliyun-ddns-client" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/rfancn/aliyun-ddns-client" class="nav-item" target="_blank"
+                    rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=github.com/" class="nav-icon" alt="阿里云DDNS">
                     <div class="nav-text">阿里云DDNS</div>
                 </a>
@@ -234,11 +266,13 @@
                     <img src="https://api.xinac.net/icon/?url=www.apple.com.cn/" class="nav-icon" alt="Apple产品保修查询">
                     <div class="nav-text">Apple产品保修查询</div>
                 </a>
-                <a href="https://www.applex.net/pages/bootcamp/" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.applex.net/pages/bootcamp/" class="nav-item" target="_blank"
+                    rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=www.applex.net/" class="nav-icon" alt="Bootcamp下载">
                     <div class="nav-text">Bootcamp下载</div>
                 </a>
-                <a href="https://freemacsoft.net/appcleaner/" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="https://freemacsoft.net/appcleaner/" class="nav-item" target="_blank"
+                    rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=freemacsoft.net/" class="nav-icon" alt="Mac软件清理">
                     <div class="nav-text">Mac软件清理</div>
                 </a>
@@ -272,16 +306,20 @@
                     <img src="https://api.xinac.net/icon/?url=wallpaperhub.app/" class="nav-icon" alt="WallpaperHub">
                     <div class="nav-text">WallpaperHub</div>
                 </a>
-                <a href="https://wall.alphacoders.com/?lang=Chinese" class="nav-item" target="_blank" rel="noopener noreferrer">
-                    <img src="https://api.xinac.net/icon/?url=wall.alphacoders.com/" class="nav-icon" alt="Wallpaper Abyss">
+                <a href="https://wall.alphacoders.com/?lang=Chinese" class="nav-item" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="https://api.xinac.net/icon/?url=wall.alphacoders.com/" class="nav-icon"
+                        alt="Wallpaper Abyss">
                     <div class="nav-text">Wallpaper Abyss</div>
                 </a>
                 <a href="https://www.10wallpaper.com/cn/" class="nav-item" target="_blank" rel="noopener noreferrer">
-                    <img src="https://api.xinac.net/icon/?url=www.10wallpaper.com/favicon.ico" class="nav-icon" alt="10Wallpaper">
+                    <img src="https://api.xinac.net/icon/?url=www.10wallpaper.com/favicon.ico" class="nav-icon"
+                        alt="10Wallpaper">
                     <div class="nav-text">10Wallpaper</div>
                 </a>
                 <a href="https://wallpapershome.com/" class="nav-item" target="_blank" rel="noopener noreferrer">
-                    <img src="https://api.xinac.net/icon/?url=wallpapershome.com/" class="nav-icon" alt="WallpapersHome">
+                    <img src="https://api.xinac.net/icon/?url=wallpapershome.com/" class="nav-icon"
+                        alt="WallpapersHome">
                     <div class="nav-text">WallpapersHome</div>
                 </a>
                 <a href="https://pixabay.com/zh/" class="nav-item" target="_blank" rel="noopener noreferrer">
@@ -290,15 +328,18 @@
                 </a>
             </div>
             <div class="nav-items" data-category="tieba">
-                <a href="https://tieba.baidu.com/f?kw=%C0%B3%D1%F4" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="https://tieba.baidu.com/f?kw=%C0%B3%D1%F4" class="nav-item" target="_blank"
+                    rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=www.baidu.com/" class="nav-icon" alt="莱阳吧">
                     <div class="nav-text">莱阳吧</div>
                 </a>
-                <a href="https://tieba.baidu.com/f?kw=%E5%B1%B1%E4%B8%9C%E6%B3%B0%E5%B1%B1&ie=utf-8" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="https://tieba.baidu.com/f?kw=%E5%B1%B1%E4%B8%9C%E6%B3%B0%E5%B1%B1&ie=utf-8" class="nav-item"
+                    target="_blank" rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=www.baidu.com/" class="nav-icon" alt="山东泰山吧">
                     <div class="nav-text">山东泰山吧</div>
                 </a>
-                <a href="https://tieba.baidu.com/f?kw=centos" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="https://tieba.baidu.com/f?kw=centos" class="nav-item" target="_blank"
+                    rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=www.baidu.com/" class="nav-icon" alt="CentOS吧">
                     <div class="nav-text">Centos吧</div>
                 </a>
@@ -321,18 +362,21 @@
                     <div class="nav-text">俄罗斯破解软件下载</div>
                 </a>
                 <a href="https://www.chromedownloads.net/" class="nav-item" target="_blank" rel="noopener noreferrer">
-                    <img src="https://api.xinac.net/icon/?url=www.chromedownloads.net/" class="nav-icon" alt="老版本Chrome">
+                    <img src="https://api.xinac.net/icon/?url=www.chromedownloads.net/" class="nav-icon"
+                        alt="老版本Chrome">
                     <div class="nav-text">老版本Chrome</div>
                 </a>
                 <a href="https://chrome.noki.eu.org/" class="nav-item" target="_blank" rel="noopener noreferrer">
-                    <img src="https://api.xinac.net/icon/?url=chrome.noki.eu.org/" class="nav-icon" alt="Edge、Chrome离线下载">
+                    <img src="https://api.xinac.net/icon/?url=chrome.noki.eu.org/" class="nav-icon"
+                        alt="Edge、Chrome离线下载">
                     <div class="nav-text">Edge、Chrome离线下载</div>
                 </a>
                 <a href="https://www.acwifi.net/" class="nav-item" target="_blank" rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=www.acwifi.net/" class="nav-icon" alt="路由器技术分享">
                     <div class="nav-text">路由器技术分享</div>
                 </a>
-                <a href="https://github.com/clsid2/mpc-hc/releases" class="nav-item" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/clsid2/mpc-hc/releases" class="nav-item" target="_blank"
+                    rel="noopener noreferrer">
                     <img src="https://api.xinac.net/icon/?url=github.com/" class="nav-icon" alt="MPC-HC下载">
                     <div class="nav-text">MPC-HC下载</div>
                 </a>
@@ -344,7 +388,7 @@
         </div>
     </div>
     <div class="bottom"></div>
-    
+
     <script src="js/data&time.js"></script>
     <script src="js/script.js"></script>
     <script src="js/bj.js"></script>
@@ -352,4 +396,5 @@
     <script src="js/password-generator.js"></script>
     <script src="js/floating-button.js"></script>
 </body>
+
 </html>
