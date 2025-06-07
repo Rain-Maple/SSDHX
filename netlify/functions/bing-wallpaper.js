@@ -6,8 +6,8 @@ exports.handler = async (event, context) => {
 
     // 关键改进：在API URL中添加时间戳参数（按北京时间每日更新）
     const cnDate = new Date(Date.now() + 8 * 3600 * 1000).toISOString().split('T')[0];
-    // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=zh-CN`;
-    const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=en-GB`;
+    const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=zh-CN`;
+    // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=en-GB`;
 
     const apiRes = await axios.get(apiUrl, {
       headers: { 'User-Agent': 'Mozilla/5.0' }
@@ -27,7 +27,7 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers: {
         'Content-Type': imageRes.headers['content-type'],
-        'Cache-Control': 'public, max-age=60', // 缓存1分钟
+        'Cache-Control': 'public, max-age=600', // 缓存10分钟
         'Access-Control-Allow-Origin': '*'
       },
       body: Buffer.from(imageRes.data).toString('base64'),
