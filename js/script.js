@@ -44,9 +44,7 @@
         });
 
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.engine-select')) {
-                engineList.classList.remove('show');
-            }
+            engineList.classList.remove('show');
         });
     }
 
@@ -95,13 +93,13 @@
         function getSuggestions(keyword) {
             const script = document.createElement('script');
             script.src = `https://www.baidu.com/su?wd=${encodeURIComponent(keyword)}&cb=handleBaiduResponse`;
-            
+
             window.handleBaiduResponse = (data) => {
                 showSuggestions(data.s || []);
                 document.body.removeChild(script);
                 delete window.handleBaiduResponse;
             };
-            
+
             document.body.appendChild(script);
         }
 
@@ -125,7 +123,7 @@
                     state.activeSuggestion = index;
                     updateActiveSuggestion();
                 });
-                
+
                 // 触摸事件
                 item.addEventListener('touchstart', () => {
                     state.activeSuggestion = index;
@@ -140,7 +138,7 @@
                     suggestionsContainer.classList.remove('show');
                     performSearch();
                 });
-                
+
                 suggestionsContainer.appendChild(item);
             });
 
@@ -159,20 +157,20 @@
                 return;
             }
 
-            switch(e.key) {
+            switch (e.key) {
                 case 'ArrowDown':
                     e.preventDefault();
-                    state.activeSuggestion = 
-                        state.activeSuggestion >= state.suggestionsData.length - 1 
-                            ? 0 
+                    state.activeSuggestion =
+                        state.activeSuggestion >= state.suggestionsData.length - 1
+                            ? 0
                             : state.activeSuggestion + 1;
                     searchInput.value = state.suggestionsData[state.activeSuggestion];
                     break;
                 case 'ArrowUp':
                     e.preventDefault();
-                    state.activeSuggestion = 
-                        state.activeSuggestion <= 0 
-                            ? state.suggestionsData.length - 1 
+                    state.activeSuggestion =
+                        state.activeSuggestion <= 0
+                            ? state.suggestionsData.length - 1
                             : state.activeSuggestion - 1;
                     searchInput.value = state.suggestionsData[state.activeSuggestion];
                     break;
@@ -226,8 +224,8 @@
         // 点击导航分类事件
         // 通过点击事件来处理导航分类的切换和高亮显示
         document.querySelectorAll('.nav-category').forEach(category => {
-            category.addEventListener('click', function() {
-                document.querySelectorAll('.nav-category').forEach(c => 
+            category.addEventListener('click', function () {
+                document.querySelectorAll('.nav-category').forEach(c =>
                     c.classList.remove('active')
                 );
                 this.classList.add('active');
@@ -235,13 +233,13 @@
 
                 document.querySelectorAll('.nav-items').forEach(item => {
                     item.classList.remove('active');
-                    item.dataset.category === this.dataset.category && 
+                    item.dataset.category === this.dataset.category &&
                         item.classList.add('active');
                 });
 
                 if (window.matchMedia("(max-width: 768px)").matches) {
                     this.parentElement.scrollTo({
-                        left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
+                        left: this.offsetLeft - (this.parentElement.offsetWidth / 2 - this.offsetWidth / 2),
                         behavior: 'smooth'
                     });
                 }
@@ -276,7 +274,7 @@
         window.addEventListener('resize', () => {
             const active = document.querySelector('.nav-category.active');
             if (!active) return;
-        
+
             navHighlight.style.transition = 'none';
             updateHighlight(active);
             setTimeout(() => {
