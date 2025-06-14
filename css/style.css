@@ -319,11 +319,11 @@ body {
 }
 
 @media (max-width: 768px) {
-    #time {
+    .time {
         font-size: 60px;
     }
 
-    #date {
+    .date {
         font-size: 18px;
     }
 
