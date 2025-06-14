@@ -10,47 +10,47 @@
 <body>
     <!-- 时间&日期 -->
     <div class="clock-container">
-        <div id="time"></div>
-        <div id="date"></div>
+        <div class="time" id="show_time"></div>
+        <div class="date" id="show_date"></div>
     </div>
 
     <!-- 搜索 -->
     <div class="search-container">
-        <div class="engine-select">
+        <div class="search-box">
             <button class="engine-btn"><img src="images/bing.svg" class="engine-icon" alt="搜索引擎"></button>
-            <div class="engine-list">
-                <div class="engine-option" data-engine="bing">
-                    <img src="images/bing.svg" class="engine-icon" alt="必应">
-                    <span>必应</span>
-                </div>
-                <div class="engine-option" data-engine="baidu">
-                    <img src="images/baidu.svg" class="engine-icon" alt="百度">
-                    <span>百度</span>
-                </div>
-                <div class="engine-option" data-engine="google">
-                    <img src="images/google.svg" class="engine-icon" alt="谷歌">
-                    <span>谷歌</span>
-                </div>
-                <div class="engine-option" data-engine="360">
-                    <img src="images/360.svg" class="engine-icon" alt="360搜索">
-                    <span>360</span>
-                </div>
-                <div class="engine-option" data-engine="zhihu">
-                    <img src="images/zhihu.svg" class="engine-icon" alt="知乎">
-                    <span>知乎</span>
-                </div>
-                <div class="engine-option" data-engine="sogou">
-                    <img src="images/sogou.svg" class="engine-icon" alt="搜狗">
-                    <span>搜狗</span>
-                </div>
-                <div class="engine-option" data-engine="toutiao">
-                    <img src="images/toutiao.svg" class="engine-icon" alt="头条">
-                    <span>头条</span>
-                </div>
+            <input type="text" class="search-input" placeholder="输入搜索内容..." autofocus>
+            <button class="search-btn"><img src="images/search.svg" class="search-icon" alt="搜索"></button>
+        </div>
+        <div class="engine-list">
+            <div class="engine-option" data-engine="bing">
+                <img src="images/bing.svg" class="engine-icon" alt="必应">
+                <span>必应</span>
+            </div>
+            <div class="engine-option" data-engine="baidu">
+                <img src="images/baidu.svg" class="engine-icon" alt="百度">
+                <span>百度</span>
+            </div>
+            <div class="engine-option" data-engine="google">
+                <img src="images/google.svg" class="engine-icon" alt="谷歌">
+                <span>谷歌</span>
+            </div>
+            <div class="engine-option" data-engine="360">
+                <img src="images/360.svg" class="engine-icon" alt="360搜索">
+                <span>360</span>
+            </div>
+            <div class="engine-option" data-engine="zhihu">
+                <img src="images/zhihu.svg" class="engine-icon" alt="知乎">
+                <span>知乎</span>
+            </div>
+            <div class="engine-option" data-engine="sogou">
+                <img src="images/sogou.svg" class="engine-icon" alt="搜狗">
+                <span>搜狗</span>
+            </div>
+            <div class="engine-option" data-engine="toutiao">
+                <img src="images/toutiao.svg" class="engine-icon" alt="头条">
+                <span>头条</span>
             </div>
         </div>
-        <input type="text" class="search-input" placeholder="输入搜索内容..." autofocus>
-        <button class="search-btn"><img src="images/search.svg" class="search-icon" alt="搜索"></button>
     </div>
     <div class="search-suggestions"></div>
 

@@ -1,6 +1,6 @@
 function updateClock() {
 	const now = new Date();
-	
+
 	// 格式化时间
 	const timeOptions = {
 		hour12: false,
@@ -9,7 +9,7 @@ function updateClock() {
 		second: '2-digit'
 	};
 	const formattedTime = now.toLocaleTimeString('zh-CN', timeOptions);
-	
+
 	// 格式化日期
 	const dateOptions = {
 		weekday: 'long',
@@ -18,10 +18,10 @@ function updateClock() {
 		day: 'numeric'
 	};
 	const formattedDate = now.toLocaleDateString('zh-CN', dateOptions);
-	
+
 	// 更新显示内容
-	document.getElementById('time').textContent = formattedTime;
-	document.getElementById('date').textContent = formattedDate;
+	document.getElementById('show_time').textContent = formattedTime;
+	document.getElementById('show_date').textContent = formattedDate;
 }
 
 // 初始加载时立即更新时间
