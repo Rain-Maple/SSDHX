@@ -123,6 +123,10 @@ body {
     box-sizing: border-box;
 }
 
+.engine-option span {
+    font-size: 12px;
+}
+
 .engine-option:hover {
     background: rgb(0, 0, 0, 0.05);
     transform: translateY(-2px);
