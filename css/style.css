@@ -298,10 +298,9 @@ body {
 }
 
 .system-column {
-    background: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 16px rgba(0, 0, 0, 0.3);
     text-shadow: var(--primary-text-shadow);
 }
 
