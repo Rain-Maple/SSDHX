@@ -8,8 +8,9 @@ exports.handler = async (event, context) => {
     const cnDate = new Date(Date.now() + 8 * 3600 * 1000).toISOString().split('T')[0];
     // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=zh-CN`; // 中国
     // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=ja-JP`; // 日本
-    const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=en-GB`; // 英国
+    // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=en-GB`; // 英国
     // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=en-US`; // 美国
+    const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=es-es`; // 西班牙
 
     const apiRes = await axios.get(apiUrl, {
       headers: { 'User-Agent': 'Mozilla/5.0' }
