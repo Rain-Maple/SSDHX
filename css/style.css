@@ -76,6 +76,11 @@ body {
     border-right: 4px solid transparent;
     border-top: 5px solid rgba(0, 0, 0, 0.35);
     margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.engine-btn.active::after {
+    transform: rotate(180deg);
 }
 
 .engine-list {

@@ -35,16 +35,19 @@
                 clonedIcon.alt = `${state.currentEngine} logo`;
                 engineBtn.replaceChildren(clonedIcon);
                 engineList.classList.remove('show');
+                engineBtn.classList.remove('active');
             });
         });
 
         engineBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             engineList.classList.toggle('show');
+            engineBtn.classList.toggle('active');
         });
 
         document.addEventListener('click', (e) => {
             engineList.classList.remove('show');
+            engineBtn.classList.remove('active');
         });
     }
 
