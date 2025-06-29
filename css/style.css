@@ -16,7 +16,7 @@
 body {
     user-select: none;
     background: no-repeat fixed;
-    /* background-size: cover; */
+    background-size: cover;
     background-position: center;
     background-blend-mode: multiply;
     -webkit-tap-highlight-color: transparent;
