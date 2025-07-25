@@ -7,10 +7,10 @@ exports.handler = async (event, context) => {
     // 关键改进：在API URL中添加时间戳参数（按北京时间每日更新）
     const cnDate = new Date(Date.now() + 8 * 3600 * 1000).toISOString().split('T')[0];
     // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=zh-cn`; // 中国
-    const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=ja-jp`; // 日本
+    // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=ja-jp`; // 日本
     // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=en-gb`; // 英国
     // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=en-us`; // 美国
-    // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=es-es`; // 西班牙
+    const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=es-es`; // 西班牙
     // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=fr-fr`; // 法国
     // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=de-de`; // 德国
     // const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=it-it`; // 意大利
