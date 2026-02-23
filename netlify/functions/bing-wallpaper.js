@@ -2,17 +2,20 @@ const axios = require('axios');
 
 exports.handler = async (event, context) => {
   try {
-    const { size = 'desktop', region = 'ja-jp' } = event.queryStringParameters || {};
-    // zh-cn 中国    en-gb 英国    es-es 西班牙    de-de 德国      es-cl 智利      en-au 澳大利亚
-    // ja-jp 日本    en-us 美国    fr-fr 法国      it-it 意大利    en-ca 加拿大    pt-br 巴西
+    const { size = 'desktop', region = 'zh-cn' } = event.queryStringParameters || {}; // 默认地区改为中国
 
-    // 关键改进：在API URL中添加时间戳参数（按北京时间每日更新）
+    // 按北京时间每日更新
     const cnDate = new Date(Date.now() + 8 * 3600 * 1000).toISOString().split('T')[0];
     const apiUrl = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&_=${cnDate}&mkt=${region}`;
 
     const apiRes = await axios.get(apiUrl, {
       headers: { 'User-Agent': 'Mozilla/5.0' }
     });
+
+    // 检查API返回是否有效
+    if (!apiRes.data.images || !apiRes.data.images[0]) {
+      throw new Error('Bing API返回数据无效');
+    }
 
     let imageUrl = `https://www.bing.com${apiRes.data.images[0].url}`;
     if (size === 'mobile') {
@@ -35,6 +38,15 @@ exports.handler = async (event, context) => {
       isBase64Encoded: true
     };
   } catch (error) {
-    return { statusCode: 500, body: 'Failed to fetch wallpaper' };
+    console.error('壁纸获取失败:', error);
+    // 返回一个简单的默认背景（例如纯色或预置图片），避免白屏
+    // 这里返回一个204 No Content，让前端保留上次背景或显示默认颜色
+    return {
+      statusCode: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: ''
+    };
   }
 };
