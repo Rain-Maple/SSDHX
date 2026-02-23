@@ -2,7 +2,9 @@ const axios = require('axios');
 
 exports.handler = async (event, context) => {
   try {
-    const { size = 'desktop', region = 'zh-cn' } = event.queryStringParameters || {}; // 默认地区改为中国
+    const { size = 'desktop', region = 'ja-jp' } = event.queryStringParameters || {};
+    // zh-cn 中国    en-gb 英国    es-es 西班牙    de-de 德国      es-cl 智利      en-au 澳大利亚
+    // ja-jp 日本    en-us 美国    fr-fr 法国      it-it 意大利    en-ca 加拿大    pt-br 巴西
 
     // 按北京时间每日更新
     const cnDate = new Date(Date.now() + 8 * 3600 * 1000).toISOString().split('T')[0];
