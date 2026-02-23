@@ -3,42 +3,33 @@ class FloatingTools extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
-            <style>
-                :host {
-                    position: fixed;
-                    bottom: 30px;
-                    right: 30px;
-                    z-index: 1000;
-                }
+      <style>
+        :host {
+          position: fixed;
+          bottom: 30px;
+          right: 30px;
+          z-index: 1000;
+        }
 
-                .tool-btn {
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 50%;
-                    background: #2196F3;
-                    color: white;
-                    border: none;
-                    cursor: pointer;
-                    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
-                    transition: transform 0.2s;
-                    font-size: 24px;
-                    line-height: 1;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
+        .tool-btn {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: #2196F3;
+          color: white;
+          border: none;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+          transition: transform 0.2s;
+        }
 
-                .tool-btn:hover {
-                    transform: scale(1.1) rotate(15deg);
-                }
+        .tool-btn:hover {
+          transform: scale(1.1) rotate(15deg);
+        }
+      </style>
 
-                .tool-btn:focus-visible {
-                    outline: 2px solid white;
-                    outline-offset: 2px;
-                }
-            </style>
-            <button class="tool-btn" aria-label="打开密码生成器">🔐</button>
-        `;
+      <button class="tool-btn">🔐</button>
+    `;
 
     this.shadowRoot.querySelector('button').addEventListener('click', () => {
       this.toggleGenerator();
