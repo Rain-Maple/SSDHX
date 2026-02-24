@@ -2,7 +2,7 @@ const axios = require('axios');
 
 exports.handler = async (event, context) => {
   try {
-    const { size = 'desktop', region = 'ja-jp' } = event.queryStringParameters || {};
+    const { size = 'desktop', region = 'it-it' } = event.queryStringParameters || {};
     // zh-cn 中国    en-gb 英国    es-es 西班牙    de-de 德国      es-cl 智利      en-au 澳大利亚
     // ja-jp 日本    en-us 美国    fr-fr 法国      it-it 意大利    en-ca 加拿大    pt-br 巴西
 
